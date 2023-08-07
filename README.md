@@ -2,7 +2,7 @@
 
 This repository contains a basic MATLAB implementation of the concepts presented in the paper titled "Multi-scale Procrustes-based 3D Shape Control" by Ignacio Cuiral-Zueco et al. The paper introduces an innovative method for controlling the shape of 3D objects by employing a multi-scale analysis and a Procrustes-based control strategy. This implementation serves as a starting point for researchers and developers interested in exploring and experimenting with the core ideas presented in the paper.
 
-![Example](example.jpg)
+![example](https://github.com/nachocz/Multi-scale-Procrustes-based-3D-shape-control/assets/29798564/4e92d5d7-3ce0-48bd-b74d-878f35c3b298)
 
 ## Introduction
 
