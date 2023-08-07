@@ -19,6 +19,7 @@ Before you begin, you should have the following prerequisites:
 - Computer Vision Toolbox
 - [iso2mesh toolbox](http://iso2mesh.sf.net)
 - Mesh-analysis utils from [ZoomOut implementation](https://github.com/llorz/SGA19_zoomOut/tree/master/utils)
+- [gptoolbox](https://github.com/alecjacobson/gptoolbox)
 
 ### Usage
 
