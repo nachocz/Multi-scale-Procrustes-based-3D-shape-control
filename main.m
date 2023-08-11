@@ -107,6 +107,7 @@ for i=1:iMax
     tic
     multiscaleprocrustescontrol;
     timecost(i)=toc;
+    iHz=1/timecost(i)
     %% update gripper configuration according to control actions
     extendedGripperIndex=[];Uaction=[];
     for g=1:G
@@ -134,10 +135,6 @@ for i=1:iMax
     N=length(V);
     errorVec=Vt(T12,:)-V(:,:);
     errorVecReshape=reshape(errorVec',[3*N 1]);
-
-    %% Data saving
-    %     ierrorVecReshape{i}=errorVecReshape;
-    %     iUaction{i}=Uaction;
 
     %% Visualisation
     plotLoopFigure;
