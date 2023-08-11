@@ -21,7 +21,7 @@ Before you begin, you should have the following prerequisites:
 - [iso2mesh toolbox](http://iso2mesh.sf.net)
 - [gptoolbox](https://github.com/alecjacobson/gptoolbox)
 
-The utils in "utils.zip" are Mesh-analysis utils are from [ZoomOut implementation](https://github.com/llorz/SGA19_zoomOut/tree/master/utils) to which we performed slight modifications, thus including them as a ".zip".
+The utils in "dependencies.zip" are Mesh-analysis utils are from [ZoomOut implementation](https://github.com/llorz/SGA19_zoomOut/tree/master/utils) to which we performed slight modifications, thus including them as a ".zip".
 
 ### Usage
 
