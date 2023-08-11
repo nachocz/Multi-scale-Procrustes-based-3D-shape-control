@@ -10,6 +10,7 @@ The "Multi-scale Procrustes-based 3D Shape Control" paper addresses the challeng
 
 ## Getting Started
 
+
 ### Prerequisites
 
 Before you begin, you should have the following prerequisites:
@@ -18,8 +19,9 @@ Before you begin, you should have the following prerequisites:
 - Statistics and Machine Learning Toolbox
 - Computer Vision Toolbox
 - [iso2mesh toolbox](http://iso2mesh.sf.net)
-- Mesh-analysis utils from [ZoomOut implementation](https://github.com/llorz/SGA19_zoomOut/tree/master/utils)
 - [gptoolbox](https://github.com/alecjacobson/gptoolbox)
+
+The utils in "utils.zip" are Mesh-analysis utils are from [ZoomOut implementation](https://github.com/llorz/SGA19_zoomOut/tree/master/utils) to which we performed slight modifications, thus including them as a ".zip".
 
 ### Usage
 
