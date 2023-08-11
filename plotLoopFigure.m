@@ -75,7 +75,7 @@ box on;
 if i>1
     subplot(2,2,3); hold on;
     surf(weightedcommutProbabAccum,'EdgeAlpha',0)
-    hold on; plot3(1:i,actionScale,ones(i,1).*10,'r',LineWidth=2);
+    hold on; plot3(1:i,actionScale,ones(i,1).*10,'r','LineWidth',2);
 
     yt=yticks;
     yticklabels(string(round(scaleVec([1 yt(2:end)]),2)));
