@@ -25,7 +25,7 @@ if i==1
     gIndex = dsearchn(V,igripperPos);
     Dt(:,1:length(gIndex))=dt(:,T12(gIndex(:)));
     %% generate scale analysis vector
-    scaleWindow=6;
+    scaleWindow=5;
     nScales=20;
     scaleVec=linspace(gridStep*2,(max(dt,[],'all')),nScales);
     nScales=length(scaleVec);
@@ -153,6 +153,4 @@ for g=1:G
     [dpg,gTaction,~]=procrustesCuiral(V(ghbins,:)-pg,Vt(T12(ghbins),:)-pg);
     gTout = rigidtransformgeodesicpath(abs(weightedcommutProbabAccum(round(actionScale(i)),i)).*dif_t,eye(4),(gTaction));
     iTaction(:,:,g,i)=(gTout);
-    rotvec(:,i,g)=rotationMatrixToVector(gTout(1:3,1:3));
-    tvec(:,i,g)=gTout(1:3,4)';
 end
