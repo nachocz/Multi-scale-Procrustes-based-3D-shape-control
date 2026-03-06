@@ -76,14 +76,6 @@ Contributions are welcome! If you would like to contribute, follow these steps:
 5. Create a pull request explaining your modifications.
 
 ---
-# Citation
-
-The related paper can be cited as:
-
-> **[1]** I. Cuiral-Zueco and G. López-Nicolás, "Multiscale Procrustes-Based 3-D Shape Control," in *IEEE/ASME Transactions on Mechatronics*, vol. 29, no. 3, pp. 1738-1748, June 2024, [doi: 10.1109/TMECH.2023.3325934](https://doi.org/10.1109/TMECH.2023.3325934).
-
-- [Ignacio Cuiral-Zueco](https://nachocz.github.io/icz-cv/)
-- [Gonzalo López-Nicolás](http://webdiis.unizar.es/~glopez)
 
 # Acknowledgements
 
