@@ -1,6 +1,6 @@
 # Multi-scale Procrustes-based 3D shape control
 
-To access the paper and the user-friendly guide **[visit the pages site https://nachocz.github.io/multiscale-procrustes-based-3D-shape-control/](https://nachocz.github.io/multiscale-procrustes-based-3D-shape-control/)**
+To access the paper and the user-friendly guide **[visit the pages site https://nachocz.github.io/Multi-scale-Procrustes-based-3D-shape-control/](https://nachocz.github.io/Multi-scale-Procrustes-based-3D-shape-control/)**
 
 The complete paper content, figures, references, and interactive features are available on the website above.
 
