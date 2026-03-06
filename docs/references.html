@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>References — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html" selected>References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        
+            <section class="references-section" id="references">
+                <h2 class="section-heading">References (32)</h2>
+                <div class="references-search">
+                    <input type="text" id="refSearch" placeholder="Search references..."
+                           class="ref-search-input">
+                </div>
+                <div class="references-list">
+<p class="reference-entry" id="ref-al2013continuous">Al-Aifari et al.. (2013). "Continuous procrustes distance between two surfaces". <em>Communications on Pure and Applied Mathematics</em>. vol. 66, pp. 934–964.</p>
+<p class="reference-entry" id="ref-aranda2020monocular">Aranda et al.. (2020). "Monocular Visual Shape Tracking and Servoing for Isometrically Deforming Objects". <em>IEEE/RSJ International Conference on Intelligent Robots and Systems</em>.</p>
+<p class="reference-entry" id="ref-berenson2013manipulation">Berenson. (2013). "Manipulation of deformable objects without modeling and simulating deformation". <em>IEEE/RSJ International Conference on Intelligent Robots and Systems</em>.</p>
+<p class="reference-entry" id="ref-cherubini2020model">Cherubini et al.. (2020). "Model-free vision-based shaping of deformable plastic materials". <em>The International Journal of Robotics Research</em>. vol. 39, pp. 1739–1759.</p>
+<p class="reference-entry" id="ref-cuiraliros2021">Cuiral-Zueco and López-Nicolás. (2021). "Multi-scale Laplacian-based {FMM} for shape control". <em>IEEE/RSJ International Conference on Intelligent Robots and Systems</em>.</p>
+<p class="reference-entry" id="ref-han2020vision">Han et al.. (2020). "Vision-based cutting control of deformable objects with surface tracking". <em>IEEE/ASME Transactions on Mechatronics</em>. vol. 26, pp. 2016–2026.</p>
+<p class="reference-entry" id="ref-herguedas2019survey">Herguedas et al.. (2019). "Survey on multi-robot manipulation of deformable objects". <em>24th IEEE International Conference on Emerging Technologies and Factory Automation</em>.</p>
+<p class="reference-entry" id="ref-hu20193">Hu et al.. (2019). "3-D deformable object manipulation using deep neural networks". <em>IEEE Robotics and Automation Letters</em>. vol. 4, pp. 4255–4261.</p>
+<p class="reference-entry" id="ref-hu2018three">Hu et al.. (2018). "Three-dimensional deformable object manipulation using fast online {Gaussian} process regression". <em>IEEE Robotics and Automation Letters</em>. vol. 3, pp. 979–986.</p>
+<p class="reference-entry" id="ref-planarbihuo22">Huo et al.. (2022). "Keypoint-Based Planar Bimanual Shaping of Deformable Linear Objects Under Environmental Constraints With Hierarchical Action Framework". <em>IEEE Robotics and Automation Letters</em>. vol. 7, pp. 5222-5229.</p>
+<p class="reference-entry" id="ref-zhu2022">J. Zhu et al.. (2022). "Editorial: Robotic Handling of Deformable Objects". <em>{IEEE} Robotics and Automation Letters</em>. vol. 7, pp. 8257–8259. <a href="https://doi.org/10.1109/LRA.2022.3185539" target="_blank" class="ref-link">[DOI]</a></p>
+<p class="reference-entry" id="ref-lagneau2020automatic">Lagneau et al.. (2020). "Automatic shape control of deformable wires based on model-free visual servoing". <em>IEEE Robotics and Automation Letters</em>. vol. 5, pp. 5252–5259.</p>
+<p class="reference-entry" id="ref-li2018vision">Li et al.. (2018). "Vision-based robotic manipulation of flexible {PCBs}". <em>IEEE/ASME Transactions on Mechatronics</em>. vol. 23, pp. 2739–2749.</p>
+<p class="reference-entry" id="ref-liu2008local">Liu et al.. (2008). "A local/global approach to mesh parameterization". <em>Computer graphics forum</em>. vol. 27, pp. 1495–1504.</p>
+<p class="reference-entry" id="ref-naijing2022">Lv et al.. (2022). "Dynamic Modeling and Control of Deformable Linear Objects for Single-Arm and Dual-Arm Robot Manipulations". <em>IEEE Transactions on Robotics</em>. vol. 38, pp. 2341-2353.</p>
+<p class="reference-entry" id="ref-lopez2020simultaneous">López-Nicolás et al.. (2020). "Simultaneous shape control and transport with multiple robots". <em>IEEE International Conference on Robotic Computing</em>.</p>
+<p class="reference-entry" id="ref-matsuno2006manipulation">Matsuno et al.. (2006). "Manipulation of deformable linear objects using knot invariants to classify the object condition based on image sensor information". <em>IEEE/ASME Transactions on Mechatronics</em>. vol. 11, pp. 401–408.</p>
+<p class="reference-entry" id="ref-melzi2019zoomout">Melzi et al.. (2019). "ZoomOut: Spectral Upsampling for Efficient Shape Correspondence". <em>ACM Transactions on Graphics</em>. vol. 38, pp. 1–14.</p>
+<p class="reference-entry" id="ref-murray2017mathematical">Murray et al.. (2017). "A mathematical introduction to robotic manipulation".</p>
+<p class="reference-entry" id="ref-navarro2016automatic">Navarro-Alarcon et al.. (2016). "Automatic {3-D} manipulation of soft objects by robotic arms with an adaptive deformation model". <em>IEEE Transactions on Robotics</em>. vol. 32, pp. 429–441.</p>
+<p class="reference-entry" id="ref-navarro2017fourier">Navarro-Alarcon and Liu. (2017). "Fourier-based shape servoing: a new feedback method to actively deform soft objects into desired {2-D} image contours". <em>IEEE Transactions on Robotics</em>. vol. 34, pp. 272–279.</p>
+<p class="reference-entry" id="ref-6581888">Navarro-Alarcón et al.. (2013). "Model-Free Visually Servoed Deformation Control of Elastic Objects by Robot Manipulators". <em>IEEE Transactions on Robotics</em>. vol. 29, pp. 1457-1468. <a href="https://doi.org/10.1109/TRO.2013.2275651" target="_blank" class="ref-link">[DOI]</a></p>
+<p class="reference-entry" id="ref-qi2021contour">Qi et al.. (2022). "Contour Moments Based Manipulation of Composite Rigid-Deformable Objects With Finite Time Model Estimation and Shape/Position Control". <em>IEEE/ASME Transactions on Mechatronics</em>. vol. 27, pp. 2985-2996. <a href="https://doi.org/10.1109/TMECH.2021.3126383" target="_blank" class="ref-link">[DOI]</a></p>
+<p class="reference-entry" id="ref-sanchez2018robotic">Sanchez et al.. (2018). "Robotic manipulation and sensing of deformable objects in domestic and industrial applications: a survey". <em>The International Journal of Robotics Research</em>. vol. 37, pp. 688–716.</p>
+<p class="reference-entry" id="ref-shetab2022rigid">Shetab-Bushehri et al.. (2022). "As-Rigid-As-Possible Shape Servoing". <em>IEEE Robotics and Automation Letters</em>. vol. 7, pp. 3898-3905.</p>
+<p class="reference-entry" id="ref-shetab2022lattice">Shetab-Bushehri et al.. (2022). "Lattice-based shape tracking and servoing of elastic objects". <em>arXiv preprint arXiv:2209.01832</em>.</p>
+<p class="reference-entry" id="ref-sintov2020">Sintov et al.. (2020). "Motion Planning for Dual-Arm Manipulation of Elastic Rods". <em>IEEE Robotics and Automation Letters</em>. vol. 5, pp. 6065-6072. <a href="https://doi.org/10.1109/LRA.2020.3011352" target="_blank" class="ref-link">[DOI]</a></p>
+<p class="reference-entry" id="ref-sorkine2007rigid">Sorkine and Alexa. (2007). "As-rigid-as-possible surface modeling". <em>Symposium on Geometry processing</em>. vol. 4, pp. 109–116.</p>
+<p class="reference-entry" id="ref-yin2021modeling">Yin et al.. (2021). "Modeling, learning, perception, and control methods for deformable object manipulation". <em>Science Robotics</em>. vol. 6, pp. eabd8803.</p>
+<p class="reference-entry" id="ref-zhu2018dual">Zhu et al.. (2018). "Dual-arm robotic manipulation of flexible cables". <em>IEEE/RSJ International Conference on Intelligent Robots and Systems</em>.</p>
+<p class="reference-entry" id="ref-zhuenviro20">Zhu et al.. (2020). "Robotic Manipulation Planning for Shaping Deformable Linear Objects With Environmental Contacts". <em>IEEE Robotics and Automation Letters</em>. vol. 5, pp. 16-23.</p>
+<p class="reference-entry" id="ref-zhu2021vision">Zhu et al.. (2021). "Vision-based manipulation of deformable and rigid objects using subspace projections of {2-D} contours". <em>Robotics and Autonomous Systems</em>. vol. 142, pp. 103798.</p>
+</div>
+            </section>
+        
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="section-appendix-A-sectionAppendix.html" class="nav-btn prev-btn">← Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+            
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

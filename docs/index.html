@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html" selected>Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero visible">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based</h1>
+        <h1 class="hero-title"> 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">Authors are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        
+            
+            <div class="cite-block">
+                <h3 class="cite-block-title">Cite this paper</h3>
+                <div class="cite-tab-row">
+                    <button class="cite-tab active" data-target="cite-text">Text</button>
+                    <button class="cite-tab" data-target="cite-bib">BibTeX</button>
+                </div>
+                <div class="cite-panel" id="cite-text">
+                    <p class="cite-text-content">I. Cuiral-Zueco and G. López-Nicolás, &ldquo;Multiscale Procrustes-Based 3-D Shape Control&rdquo;, in <em>IEEE/ASME Transactions on Mechatronics</em>, vol.&nbsp;29, no.&nbsp;3, pp.&nbsp;1738-1748, 2024, <a href="https://doi.org/10.1109/TMECH.2023.3325934" target="_blank">doi:&nbsp;10.1109/TMECH.2023.3325934</a>.</p>
+                    <button class="cite-copy-btn" data-clip="cite-text-content" title="Copy to clipboard">Copy</button>
+                </div>
+                <div class="cite-panel" id="cite-bib" style="display:none;">
+                    <pre class="cite-bibtex-content">@ARTICLE{10311090,
+  author = {Cuiral-Zueco, Ignacio and López-Nicolás, Gonzalo},
+  title = {Multiscale Procrustes-Based 3-D Shape Control},
+  journal = {IEEE/ASME Transactions on Mechatronics},
+  year = {2024},
+  volume = {29},
+  number = {3},
+  pages = {1738-1748},
+  doi = {10.1109/TMECH.2023.3325934},
+  keywords = {Shape control;Grippers;Deformation;Task analysis;Rigidity;Jacobian matrices;Object detection;Deformable models;Multi-robot systems;Deformable object manipulation;multirobot manipulation;shape control;shape servoing}
+}</pre>
+                    <button class="cite-copy-btn" data-clip="cite-bibtex-content" title="Copy to clipboard">Copy</button>
+                </div>
+            </div>
+            <section class="abstract-section" id="abstract">
+                <h2 class="section-heading">Abstract</h2>
+                <div class="abstract-text">The shape control problem involves deforming a non-rigid object into a desired shape. In this paper, we present a new 3D shape control method that can handle large deformations of texture-less objects. In particular, we use functional maps to generate surface points&#x27; correspondences between the current and the desired shape that serve as input for our Procrustes-based multi-scale control strategy. The main contribution is a multi-scale analysis with a relaxed rigidity assumption that defines scales based on geodesic distances to the grippers. Our method considers that objects may deform at different scales depending on the gripper actions applied to them. For this reason, our multi-scale analysis computes shape control actions defined according to gripper influence on particularly convenient scales. We present stability analysis and discuss several simulations and experiments.</div>
+            </section>
+            
+            <hr class="section-divider">
+            <section id="video">
+                <h2 class="section-heading">Video</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/a2cZTjaVBmM"
+                            title="Paper video" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </section>
+            <hr class="section-divider">
+            <section id="overview">
+                <h2 class="section-heading">Sections Overview</h2>
+                <ul class="overview-list"><li><a href="section-1-introduction.html"><strong>Section 1.</strong> Introduction</a></li>
+<li><a href="section-2-sectionControl.html"><strong>Section 2.</strong> Multi-scale Procrustes shape control</a></li>
+<li><a href="section-3-sectionStability.html"><strong>Section 3.</strong> Stability analysis</a></li>
+<li><a href="section-4-Section-results.html"><strong>Section 4.</strong> Results</a></li>
+<li><a href="section-5-conclusions.html"><strong>Section 5.</strong> Conclusions</a></li>
+<li><a href="section-appendix-A-sectionAppendix.html"><strong>Section Appendix A.</strong> Differentiability of $\mathbf{T}_g$ with respect to $r$</a></li></ul>
+            </section>
+            
+            <hr class="section-divider">
+            <section id="acknowledgements">
+                <h2 class="section-heading">Acknowledgements</h2>
+                <div class="section-body">
+                    <p>I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+                </div>
+            </section>
+            
+            <hr class="section-divider">
+            <section id="authors">
+                <h2 class="section-heading">Authors</h2>
+                <div class="section-body">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="https://nachocz.github.io/ignacio-cuiral-zueco.github.io/" target="_blank" style="color: var(--color-primary); text-decoration: none; font-family: var(--font-sans); font-weight: 500;">Ignacio Cuiral-Zueco</a></li><li style="margin-bottom: 8px;"><a href="http://webdiis.unizar.es/~glopez" target="_blank" style="color: var(--color-primary); text-decoration: none; font-family: var(--font-sans); font-weight: 500;">Gonzalo López-Nicolás</a></li>
+                    </ul>
+                </div>
+            </section>
+        
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            
+            <a href="section-1-introduction.html" class="nav-btn next-btn">Next: 1. Introduction →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. Multi-scale Procrustes shape control — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html" selected>2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section active"><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+<ul>
+<li class="toc-subsection"><a href="#procrustes-operator-and-shape-error-metric">2.1. Procrustes operator and shape error metric.</a>
+</li>
+<li class="toc-subsection"><a href="#local-rigidity-behaviour-lrb-hypothesis">2.2. Local-rigidity behaviour (LRB) hypothesis</a>
+</li>
+<li class="toc-subsection"><a href="#relaxed-local-rigidity-behaviour-lrb-analysis">2.3. Relaxed local-rigidity behaviour (LRB) analysis</a>
+</li>
+<li class="toc-subsection"><a href="#procrustes-based-locally-optimal-scale-estimation">2.4. Procrustes-based locally optimal scale estimation</a>
+</li>
+<li class="toc-subsection"><a href="#control-strategy">2.5. Control strategy</a>
+</li>
+</ul>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        <section class="section-content"><h2 id="sectionControl" class="section-heading"><span class="sec-num">2</span> Multi-scale Procrustes shape control</h2>
+<div class="section-body">In this section we present a shape control strategy that, for each gripper \(g=1,...,G\), defines a 6 DoF gripper control action expressed as a rigid transform \(\mathbf{U}_g\in SE(3)\) (composed by translation action in \(\mathbf{u}_g\in\mathbb{R}^3\) and rotational action in Euler angles \(\omega\in\mathbb{R}^3\)).</div>
+<h3 id="procrustes-operator-and-shape-error-metric" class="section-heading"><span class="sec-num">2.1</span> Procrustes operator and shape error metric.</h3>
+<div class="section-body"><p>Functional maps (<a href="references.html#ref-melzi2019zoomout" class="citation" title="ZoomOut: Spectral Upsampling for Efficient Shape Correspondence">Melzi et al., 2019</a>), based on the spectral analysis of the mesh through the Laplace-Beltrami operator, allow us to obtain a point-to-point match between current shape and target shape mesh nodes. We denote the current shape mesh nodes positions by \(\mathbf{x}_m\in \mathbb{R}^3, m=1,...,M\). These vectors are stacked in matrix \(\mathbf{X}\in\mathbb{R}^{3\times M}\). Each current shape point \(\mathbf{x}_m\) has an associated (matched) target point \(\mathbf{y}_m\in \mathbb{R}^3\). These target points are column-wise stacked in \(\mathbf{Y}\in \mathbb{R}^{3\times M}\).</p><p>For simplicity of notation, we define the Procrustes operator \((\mathbf{T},d_{\mathcal{P}})=\mathcal{P}(\mathbf{X},\mathbf{Y})\). This operator encloses the orthogonal Procrustes problem as it takes the two column-to-column matched sets of point coordinates \(\mathbf{X}, \mathbf{Y}\) and returns their Procrustes distance \(d_{\mathcal{P}}\) and the rigid transform \(\mathbf{T}(\mathbf{X},\mathbf{Y})\in SE(3)\) that minimises such distance:
+<span id="eq:procrustes"></span>\[
+\begin{aligned}
+d_{\mathcal{P}}(\mathbf{X},\mathbf{Y})=
+      \begin{matrix}
+      \\ \min
+    \\ \mathbf{R}
+    \end{matrix} \left \| \mathbf{R}(\mathbf{X}-\bar{\mathbf{X}})-(\mathbf{Y}-\bar{\mathbf{Y}}) \right \|_F
+\\
+    \text{s.t.} \, \mathbf{R}\in \text{SO}(3).
+\end{aligned}
+\tag{1}
+\]
+Matrices \(\bar{\mathbf{X}}\in\mathbb{R}^{3\times M}\) and \(\bar{\mathbf{Y}}\in\mathbb{R}^{3\times M}\) stack the column-wise mean \(\bar{\mathbf{x}},\bar{\mathbf{y}}\) (i.e. the centroid) of matrices \({\mathbf{X}},{\mathbf{Y}}\). Matrix \(\mathbf{R}\in \text{SO}(3)\) is the rotation component of \(\mathbf{T}\) and \(\mathbf{t}=\bar{\mathbf{y}}-\mathbf{R}\bar{\mathbf{x}}\) is the translation component.</p><p>We can apply the Procrustes operator \(\mathcal{P}(\mathbf{X}(t),\mathbf{Y})\) to obtain shape error
+<span id="eq:error"></span>\[
+\tag{2}
+    e(t)=d_{\mathcal{P}}(\mathbf{X}(t),\mathbf{Y}),
+\]
+which measures how similar shapes are (\(e(t)=0\) when two shapes are identical). The goal of our control strategy is to reduce the error metric \(e(t)\). Before initiating our control strategy, we apply \(\mathbf{T}^{-1}(t_0)\), obtained from \(\mathcal{P}(\mathbf{X}(t_0),\mathbf{Y})\), to our target shape as to bring it closer to our current shape in the 3D embedding.</p></div>
+<h3 id="local-rigidity-behaviour-lrb-hypothesis" class="section-heading"><span class="sec-num">2.2</span> Local-rigidity behaviour (LRB) hypothesis</h3>
+<div class="section-body">Consider we were only focusing on the surface points that lie within a topological distance \(r\) from a gripper \(g\), i.e. a set of \(M_g\) object points \(\mathbf{X}_g(t,r)\in\mathbb{R}^{3\times M_g}\) defined by points \(\mathbf{x}_m(t,r)\in \Omega_g(t,r)\), where \(\Omega_g(t,r)\) is the object&#x27;s surface open domain defined by a geodesic ball of radius \(r\) centred at gripper \(g\). Suppose the object&#x27;s rigidity (unknown for us) allows for points \(\mathbf{X}_g(t,r)\) to move on a rigid manner under small gripper transforms \(\mathbf{H}_g\), i.e. \(\mathbf{H}_g\approx \mathbf{I}_{4}\) (being \( \mathbf{I}_{4}\) the \(4\times 4\) identity matrix), and the rest of points in \(\mathbf{X}(t)\), i.e. \(\mathbf{x}_m(t) \notin \Omega_g(t,r)\), remain unaffected by \(\mathbf{H}_g\). We denote this rigid behaviour as local-rigidity behaviour (LRB for now on). In this scenario, one could benefit from a Procrustes analysis \(\mathcal{P}(\mathbf{X}_g(t,r),\mathbf{Y}_g(r))\), where \(\mathbf{Y}_g(r)\in \mathbf{Y}\) are the points matched to those of \(\mathbf{X}_g(t,r)\). The transform \(\mathbf{T}_g(t,r)\) from the Procrustes analysis can be used to define a incremental transform
+<span id="eq:smallAction"></span>\[
+    \mathbf{H}_g(t,r)=\exp{(\Delta t \log{(\mathbf{T}_g(t,r)}))}.
+    \tag{3}
+\]
+where \(\mathbf{H}_g(t,r)\) belongs to the geodesic path (in \(\text{SE}(3)\)) defined from \(\mathbf{I}_{4}\) towards \(\mathbf{T}_g(t,r)\). This path is parameterised by time step \(\Delta t \in \mathbb{R}, \,\Delta t \in[0,1]\) which, when taking low values, generates \(\mathbf{H}_g(t,r)\) that meet the <em>small action</em> requirement for local rigid behaviour (LRB). Therefore, the rigid error reduction of the subset \(\mathbf{X}_g(t,r)\) can be performed with actions \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r)\) and thus the global Procrustes residual of the whole set \(\mathbf{X}(t)\) with respect to \(\mathbf{Y}\), i.e. \(e(t)\), can be reduced too. Note that, as \(\Delta t \rightarrow 0\), (<a href="#eq:smallAction" class="ref">3</a>) defines the state equation of \(\mathbf{X}_g(t,r)\):
+<span id="eq:stateeq"></span>\[
+    \tag{4}
+    \mathbf{X}^h_g(t,r)=\mathcal{T}\{  \prod_{t_0}^{t}e^{\log(\mathbf{T}_g(t,r))\mathrm{d}t}\}\mathbf{X}^h_g(t_0,r),
+\]
+where \(h\) denotes homogeneous coordinates and \(\mathcal{T}\) operates on the product integral generating a time-ordered product \(\mathcal{T}\{  \prod_{t_0}^{t}f(t)\}=f(t)f(t-\mathrm{d}t)\cdots f(t_0+\mathrm{d}t)f(t_0)\). Equation (<a href="#eq:stateeq" class="ref">4</a>) constitutes a solution for:
+<span id="eq:statederiv"></span>\[
+    \tag{5}
+    \frac{\mathrm{d}\mathbf{X}^h_g(t,r)}{\mathrm{d}t}=\log(\mathbf{T}_g(t,r))\mathbf{X}^h_g(t,r),
+\]
+which defines the time derivative of points when they are only affected by gripper \(g\).</div>
+<h3 id="relaxed-local-rigidity-behaviour-lrb-analysis" class="section-heading"><span class="sec-num">2.3</span> Relaxed local-rigidity behaviour (LRB) analysis</h3>
+<div class="section-body"><p>In the diminishing rigidity concept introduced in (<a href="references.html#ref-berenson2013manipulation" class="citation" title="Manipulation of deformable objects without modeling and simulating deformation">Berenson, 2013</a>), an exponential decay of the material&#x27;s rigidity with respect to gripper positions is assumed. However, an object may present diverse and time-varying behaviours depending on its shape and/or deformation state (e.g., a discontinuous rigidity function as in a mechanism). Our method does not assume any particular rigidity decay function on the object. Rather, our proposed relaxed LRB assumption allows us to evaluate and quantify on which scale (or topological distance) gripper actions are more effective in reducing the shape error.</p><p>Local-rigidity behaviour (LRB) is certainly met by points grabbed by the grippers (assuming grasping stability). However, the rest of the object points will most likely undergo deformations and thus not present LRB. For this reason, we base our control strategy on a relaxed assumption of LRB, i.e., we make use of a multi-scale analysis that quantifies how close to the LRB our object behaviour is for each analysed scale. In order to perform a multi-scale analysis, we establish scale \(r \in [ r_0 ,R(t)]\) being \(r_0\) the gripper&#x27;s size and \(R(t)\) the largest topological distance that can be found in the object. Our analysis quantifies the extent to which sets \(\mathbf{X}_g(t,r)\) behave rigid-like under any action \(\mathbf{U}_g(t)\). If actions \(\mathbf{U}_g(t)\) affected \(\mathbf{X}(t)\) at scale \(r\) with ideal LRB and assuming linear action superposition (given object&#x27;s isotropy and homogeneity), we could estimate the resulting shape points \(\hat{\mathbf{X}}(t,r)\) as:
+<span id="eq:Xestimation"></span>\[
+    \hat{\mathbf{x}}^h_m(t,r)=\frac{1}{G}\sum_{g}^{G}(\mathbf{U}_g(t))^{\delta_g(m,r)}\mathbf{x}^h_m(t,r)
+    \tag{6}
+\]
+where function \(\delta_g(m,r)\) allows to disregard actions for points \(\mathbf{x}_m(t,r) \notin \Omega_g(t,r)\):
+\[
+    \delta_g(m,r):=\begin{cases}
+   1 \, & \text{if } {\mathbf{x}}_m(t,r) \in \Omega_g(t,r) \\ 
+0\, & \text{otherwise.}
+\end{cases} 
+\]
+Using the Procrustes analysis \(\mathcal{P}(\mathbf{X}(t),\hat{\mathbf{X}}(t,r))\), we can obtain a measure \(w(t,r)\) of how much the object presents LRB at each scale \(r\) (i.e. at each topological distance \(r\) from the grippers) when undergoing gripper actions \(\mathbf{U}_g(t)\):
+<span id="eq:ws"></span>\[
+    w(t,r)=1/\exp(\beta \, d_{\mathcal{P}}(\mathbf{X}(t),\hat{\mathbf{X}}(t,r))).
+    \tag{7}
+\]
+Measure \(w(t,r)\in (0, 1]\), \(w(t,r)=1\) when the LRB is fully met (i.e. \(d_{\mathcal{P}}(\mathbf{X}(t),\hat{\mathbf{X}}(t,r))=0\)). Parameter \(\beta&gt;0\) allows to modify the relaxation of the LRB assumption. Lower values of \(\beta\) imply a more relaxed rigidity assumption (e.g., if \(\beta=0.1\), almost every \(w(t,r)\approx 1\) and thus we consider every set \(\mathbf{X}_g(t,r), \forall r\in [ r_0 ,R(t)]\) to move rigidly, even if they do not). We propose using \(\beta \approx 1\times10^4\), which implies a conservative assumption of LRB.</p></div>
+<h3 id="procrustes-based-locally-optimal-scale-estimation" class="section-heading"><span class="sec-num">2.4</span> Procrustes-based locally optimal scale estimation</h3>
+<div class="section-body"><p>Note that \(w(t,r)\) also quantifies the effectiveness with which the rigid error of \(\mathbf{X}_g(t,r)\) can be reduced by means of incremental transforms \(\mathbf{H}_g(t,r)\) as defined in (<a href="#eq:smallAction" class="ref">3</a>) (larger \(w(t,r)\) implies more effectiveness). With this information, we seek to define gripper actions \(\mathbf{U}_g(t)\) such that they better benefit the global error reduction \(e(t)\). In order to define \(\mathbf{U}_g(t)\), we propose analysing scenarios in \(r \times r' \in \mathbb{R}\times\mathbb{R} : r,r' \in  [ r_0 ,R(t)]\). These scenarios constitute an estimation of the object evolution if it was affected by actions \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r)\) (defined at scale \(r\)) but presented ideal LRB at scale \(r'\). Each estimation \(\hat{\mathbf{X}}(t,r,r')\) is defined as:
+<span id="eq:Xestimation2"></span>\[
+    \hat{\mathbf{x}}^h_m(t,r,r')=\frac{1}{G}\sum_{g}^{G}\mathcal{T}\{\prod_{t}^{t+\mathrm{d}t}(\mathbf{H}_g(t,r))^{\delta_g(m,r')}\}\mathbf{x}^h_m(t,r')
+    \tag{8}
+\]
+In order to perform our analysis, we define an error increment estimation surface
+    
+<span id="eq:errorestimation"></span>\[
+\hat{e}(t,r,r')= d_{\mathcal{P}}(\hat{\mathbf{X}}(t,r,r'),\mathbf{Y})-e(t).
+\tag{9}
+\]</p><p>Surface \(\hat{e}(t,r,r')\) constitutes a continuous surface that provides an insight on the effectiveness and risks in reducing error \(e(t)\) by means of actions \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r)\) (generated under the ideal LRB assumption). We can incorporate our knowledge on how much the LRB is met at each scale \(r'\) (i.e. \(w(t,r')\)) and define an error-reduction effectiveness \(q(t,r)\in \mathbb{R}\) which, for each estimated transform \(\mathbf{H}_g(t,r)\), yields:
+<span id="eq:qdefinition"></span>\[
+     q(t,r)=\int_{r_0}^{R}\hat{e}(t,r,r') w(t,r') \mathrm{d}r'.
+    \tag{10}
+\]
+In (<a href="#eq:qdefinition" class="ref">10</a>), ideal error increment estimations \(\hat{e}(t,r,r')\) are weighted by the error reduction effectiveness \(w(t,r')\). In particular, \(q(t,r)\) estimates the global error increment that each \(\mathbf{H}_g(t,r)\) (<a href="#eq:smallAction" class="ref">3</a>) can generate. The logical choice of \(r\) when defining gripper actions \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r)\) would be the one that ensures the largest error reduction, i.e. \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r^*(t)),\, r^*(t)={\arg \min}_r(q(t,r)) \). However, \(w(t,r)\) (present in the definition of \(q(t,r)\)) is computed based on the effects of previous actions defined according to \(\mathbf{U}_g(t)=\mathbf{H}_g(t,r^*(t))\). For \(q(t,r)\) to be reliable, updates in \(r^*(t)\) should take place in the locality of \(r^*(t)\). For this reason we define \(r^*(t)\) as:
+<span id="eq:supdate"></span>\[
+    r^*(t)=-\int_{t_0}^{t}\frac{\partial q(t,r^*(t))}{\partial r}+r^*(t_0),
+    \tag{11}
+\]
+which updates \(r^*(t)\) in the direction of the \(\partial/\partial r\) component of the gradient for a given time instant \(t\) and thus generates a locally optimal \(r^*(t)\).</p><p>Note that (<a href="#eq:supdate" class="ref">11</a>) requires \(q(t,r^*(t))\) to be continuous differentiable with respect to \(r\). This implies \(e(t), w(t,r')\) and \(\hat{e}(t,r,r')\), and thus Procrustes transforms \(\mathbf{T}_g\) and distances \(d_{\mathcal{P}}\), should be continuous differentiable with respect to \(r\). The residual \(d_{\mathcal{P}}\) is continuous and differentiable as it constitutes a metric in shape space (<a href="references.html#ref-al2013continuous" class="citation" title="Continuous procrustes distance between two surfaces">Al-Aifari et al., 2013</a>). On the other hand, showing that the Procrustes optimisation result \(\mathbf{T}_g\) is continuous and differentiable with respect to \(r\) requires more development that can be found in Appendix <a href="section-appendix-A-sectionAppendix.html#sectionAppendix" class="ref">A</a>.</p><p>We now provide some intuitions on impact of \(\beta\) in (<a href="#eq:ws" class="ref">7</a>) on (<a href="#eq:supdate" class="ref">11</a>). When setting a low value for \(\beta\) (e.g., \(\beta=0.1\)), we assume that our LRB hypothesis holds even for actions and scales that lie far from our current actions \(\mathbf{U}_g(t)\) and scale \(r^*(t)\). Consequently, surface \(q(r,t)\) allows for a more unrestricted evolution of \(r^*(t)\), which could potentially lead to undesired system behaviours such as slower performance or, in the case of extremely low values of \(\beta\), to larger final error. On the other hand, a high \(\beta\) (e.g., \(\beta=1\times10^4\)) leads to a conservative \(q(r,t)\) surface that disregards estimates that lie far from the current actions and locally optimal scale. This conservative approach generates resistance to large changes in \(r^*(t)\), confining its movement to regions where the LRB hypothesis has been validated through measurements across iterations. Very large \(\beta\) values will not compromise the system&#x27;s effectiveness, but they will lead to slower convergence as \(r^*(t)\) evolves more conservatively.</p></div>
+<h3 id="control-strategy" class="section-heading"><span class="sec-num">2.5</span> Control strategy</h3>
+<div class="section-body">Our control strategy makes use of the Procrustes action defined at scale \(r^*(t)\), i.e. \(\mathbf{T}_g(t,r^*(t))\). We defined our control law as the new term in the time-ordered product of (<a href="#eq:stateeq" class="ref">4</a>):
+<span id="eq:controlLaw"></span>\[
+    \mathbf{U}_g(t)=\exp{(\log{(\mathbf{T}_g(t,r^*(t))})\mathrm{d}t)}.
+    \tag{12}
+\]
+This results in the state equation of \(\mathbf{X}(t)\) (for each individual \(\mathbf{x}_m(t) \in \mathbf{X}(t)\)) 
+<span id="eq:XstateWithU"></span>\[
+    {\mathbf{x}}^h_m(t)=\frac{1}{G}\sum_{g}^{G}\mathcal{T}\{\prod_{t_0}^{t}(\mathbf{U}_g(t))^{\delta_g(m,r^*(t))}\}\mathbf{x}^h_m(t_0,r^*(t_0)),
+    \tag{13}
+\]
+with \(r^*(t)\) updated as in (<a href="#eq:supdate" class="ref">11</a>). Note that the update rule in (<a href="#eq:supdate" class="ref">11</a>) needs an initial value of \(r^*(t_0)\) and \(w(t_0,r')\). We propose \(w(t_0,r')=1\,\forall r'\), which is equivalent to assuming equal LRB at all scales \(r'\). Our initial estimation of \(r'\) takes the minimum at the initial time instant, that is \(r^*(t_0)={\arg \min}_r(q(t_0,r))\). Note that, for the update of \(r^*(t)\), the partial derivative of \(q(t,r^*(t))\) in
+ (<a href="#eq:supdate" class="ref">11</a>) needs to be evaluated only at \(r^*(t)\). This avoids the need to compute \(q(t,r)\) in (<a href="#eq:qdefinition" class="ref">10</a>) for all \(r\) except for the neighbourhood of \(r^*(t)\), contributing to the cost-effectiveness of our method. Furthermore, the rest of the method relies on matrix operations and SVD decomposition, further enhancing its low-cost nature, as it will be illustrated in the experiments section.</div></section>
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="section-1-introduction.html" class="nav-btn prev-btn">← 1. Introduction</a>
+            <a href="section-3-sectionStability.html" class="nav-btn next-btn">3. Stability analysis →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

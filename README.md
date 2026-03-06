@@ -1,4 +1,38 @@
-# Multi-scale Procrustes-based 3D Shape Control Implementation
+# Multi-scale Procrustes-based 3D shape control
+
+To access the paper and the user-friendly guide **[visit the pages site https://nachocz.github.io/multiscale-procrustes-based-3D-shape-control/](https://nachocz.github.io/multiscale-procrustes-based-3D-shape-control/)**
+
+The complete paper content, figures, references, and interactive features are available on the website above.
+
+---
+
+## Citation
+
+If you find this work useful, please cite the following publication:
+
+> **[1]** I. Cuiral-Zueco and G. López-Nicolás, "Multiscale Procrustes-Based 3-D Shape Control", in *IEEE/ASME Transactions on Mechatronics*, vol. 29, no. 3, pp. 1738-1748, 2024, [doi: 10.1109/TMECH.2023.3325934](https://doi.org/10.1109/TMECH.2023.3325934).
+
+```bibtex
+@ARTICLE{10311090,
+  author = {Cuiral-Zueco, Ignacio and López-Nicolás, Gonzalo},
+  title = {Multiscale Procrustes-Based 3-D Shape Control},
+  journal = {IEEE/ASME Transactions on Mechatronics},
+  year = {2024},
+  volume = {29},
+  number = {3},
+  pages = {1738-1748},
+  doi = {10.1109/TMECH.2023.3325934},
+  keywords = {Shape control;Grippers;Deformation;Task analysis;Rigidity;Jacobian matrices;Object detection;Deformable models;Multi-robot systems;Deformable object manipulation;multirobot manipulation;shape control;shape servoing}
+}
+```
+
+## Authors
+
+- [Ignacio Cuiral-Zueco](https://nachocz.github.io/ignacio-cuiral-zueco.github.io/)
+- [Gonzalo López-Nicolás](http://webdiis.unizar.es/~glopez)
+
+
+# Implementation
 
 This repository contains a basic MATLAB implementation of the concepts presented in the paper
 

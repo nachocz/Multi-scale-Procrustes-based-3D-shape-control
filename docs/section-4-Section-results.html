@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. Results — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html" selected>4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section active"><a href="section-4-Section-results.html">4. Results</a>
+<ul>
+<li class="toc-subsection"><a href="#simulations">4.1. Simulations</a>
+</li>
+<li class="toc-subsection"><a href="#experiments">4.2. Experiments</a>
+</li>
+</ul>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        <section class="section-content"><h2 id="Section:results" class="section-heading"><span class="sec-num">4</span> Results</h2>
+<div class="section-body"><figure class="survey-figure" id="simulations_fig_2">
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG2.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG3.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG4.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG5.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG6.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG7.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG8.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG9.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG10.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG11.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG12.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG13.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG14.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG15.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG16.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG17.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG18.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG19.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG20.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG21.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG22.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG23.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG24.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG25.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/sim/FIG26.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG27.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG28.png" alt="Figure" loading="lazy">
+<img src="img/sim/FIG29.png" alt="Figure" loading="lazy">
+</div>
+<figcaption><strong>Figure 2.</strong> Four examples, one per column, are presented. First three rows show the initial (\(\mathbf{X}(t_0)\)), final (\(\mathbf{X}(t)\)) and target (\(\mathbf{Y}\)) shapes. Each gripper is represented with a grey cube. On the object surface, the surface point matching is represented with a colour map. The fourth row contains the shape error plot (<a href="section-2-sectionControl.html#eq:error" class="ref">2</a>) and a distribution of the object&#x27;s relative deformation (positive values when the object stretches and negative values if the object is being compressed). The fifth and sixth rows are the action plots of the grippers: translation vector (i.e. \(\mathbf{u}_g\)) and rotation (Euler angles \(w\)) components. The RGB colour code indicates \(x,y,z\) components for translation and roll, pitch, yaw components for rotation. In the action-related plots (i.e. fifth and sixth rows), each line-style refers to a particular gripper. The last row represents surface \(q(t,r)\) and the evolution of \(r^*(t)\) through time (red line).</figcaption>
+</figure><figure class="survey-figure" id="experiments_fig">
+<div class="figure-grid figure-grid-1">
+<img src="img/experiments/FIG30.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/experiments/FIG31.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG32.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG33.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG34.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/experiments/FIG35.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG36.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG37.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG38.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/experiments/FIG39.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG40.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG41.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG42.png" alt="Figure" loading="lazy">
+</div>
+<div class="figure-grid figure-grid-4">
+<img src="img/experiments/FIG43.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG44.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG45.png" alt="Figure" loading="lazy">
+<img src="img/experiments/FIG46.png" alt="Figure" loading="lazy">
+</div>
+<figcaption><strong>Figure 3.</strong> Four experiments, from left to right, that constitute analogous deformation cases to those of <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a>. First block shows several snapshots of the experiments and the target shape (\(\mathbf{Y}\)). Each gripper is represented with a grey cube. The surface point matching is represented with a colour map. Next rows contain the shape error, the translation action vector \(\mathbf{u}_g\), and rotation action components (Euler angles \(\omega\)). In the action plots, each line-style refers to a particular gripper, and the RGB colour code indicates \(x,y,z\) components. Last row represents surface \(q(k,r)\) and the evolution of \(r^*(k)\) (red line).</figcaption>
+</figure></div>
+<h3 id="simulations" class="section-heading"><span class="sec-num">4.1</span> Simulations</h3>
+<div class="section-body"><p>We performed several simulations using the ARAP (<a href="references.html#ref-sorkine2007rigid" class="citation" title="As-rigid-as-possible surface modeling">Sorkine and Alexa, 2007</a>) deformation model. The simulation results are presented in <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a>. Within this figure, each column presents the results of a simulation. We normalised the colour map depicting values of \(q(t,r)\) so that negative values are blue, positive values are yellow and zero (or close to zero) values are green. One intuition for interpreting surface \(q(t,r)\) is to think of each scale \(r\in [ r_0 ,R(t)]\) (at a given instant \(t\)) as an available choice of an action to be performed under the relaxed LRB assumption. The value of \(q(t,r)\) (<a href="section-2-sectionControl.html#eq:qdefinition" class="ref">10</a>) constitutes the error derivative estimation that each action will cause. Our method seeks large error reduction by <em>choosing</em> actions \(r^*(t)\) (<a href="section-2-sectionControl.html#eq:supdate" class="ref">11</a>) that present large negative values of \(q(t,r^*(t))\).</p><p>The first simulation in <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a> constitutes a challenging case given its anti-symmetry. This is specially noticeable in the last plot where surface \(q(t,r)\) presents estimations of positive error derivatives at large scales right at the initial configuration (\(t=0\), yellow tones around \(r=7\) [cm]). In other simulations, positive derivative estimations begin to appear later during the control process. Nonetheless, our initial choice of \(r^*(t_0)\) ensures \(q(t,r^*)&lt;0\) and the control task is performed properly.</p><p>The simulation in the second column in <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a> constitutes a paradigmatic example of how our multi-scale analysis works. Note how our strategy is able to prioritise larger elements of the object (i.e., larger \(r^*(t)\) values) when their contribution to the error term is large. The gripper positioned at the small appendix will collaborate in reducing the main beam error. Whenever the main beam error is reduced, the focus shall return to the reduction of the appendix&#x27; error (note the scale transition of \(r^*(t)\) between \(t=5\) and \(t=10\)). 
+The third column in <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a> involves a pure-twist. This can be challenging given singularities of the opposed rotation actions. However, actions are defined symmetrically and the error is smoothly reduced. Fourth column in <a href="#simulations_fig_2" class="figref">Fig.&nbsp;2</a> constitutes an example of pure bending process. Additional simulations are shown in the <strong>attached video</strong>.</p></div>
+<h3 id="experiments" class="section-heading"><span class="sec-num">4.2</span> Experiments</h3>
+<div class="section-body"><p>We present several experiments (<a href="#experiments_fig" class="figref">Fig.&nbsp;3</a>) with deformation cases analogous to those shown in the simulations. Our setup consists of two ABB IRB120 industrial robots (equipped with pneumatic grippers) and an Intel Realsense D415 RGB-D camera that provides the depth information we use for the 3D analysis. The objects to be handled are single-coloured foam cut-outs that favour colour-based segmentation. Recall that our method is designed for relatively rigid objects that align with our local-rigidity behaviour assumption. Therefore, we cannot guarantee its proper performance with softer objects, such as clothes. The analysis is carried out in Matlab and the communication with the robots is via TCP/IP. To avoid dropping below the process frequency of 5 Hz with the previously mentioned set-up, we propose discretising \(r\) to a set of around 20 scale values. Note that, given the analysis in Appendix <a href="section-appendix-A-sectionAppendix.html#sectionAppendix" class="ref">A</a>, \(q(r,t)\) in (<a href="section-2-sectionControl.html#eq:supdate" class="ref">11</a>) is continuous differentiable. Therefore, using discrete points to approximate partial derivatives of \(q(r,t)\) by means of classic methods (e.g., polynomial regression) holds mathematical significance. Regarding the code implementation, experiments were conducted on an Intel(R) Core(TM) i7-8565U CPU with 1.99&nbsp;GHz and 16&nbsp;GB of RAM <sup class="footnote" data-note="Available demo code for the method is provided in https://github.com/nachocz/Multi-scale-Procrustes-based-3D-shape-control">[1]</sup>.</p><figure class="survey-figure" id="fig:model-validation">
+<img src="img/FIG47.png" alt="Figure" loading="lazy">
+<figcaption><strong>Figure 4.</strong> The figure presents a comparison of our proposed shape control model against two geometry-based deformation models (<a href="references.html#ref-sorkine2007rigid" class="citation" title="As-rigid-as-possible surface modeling">Sorkine and Alexa, 2007</a>) and (<a href="references.html#ref-liu2008local" class="citation" title="A local/global approach to mesh parameterization">Liu et al., 2008</a>), and against as a mass-spring-damper (MSD) physical-based model. On the top row, for each of the four experiments, the models&#x27; estimation error is presented. The estimation error is determined by evaluating the distance distribution between predicted and measured node positions across iterations. On the second row, the time cost of each process is represented in terms of processing frequency.</figcaption>
+</figure><p>All shape control problems tackled in the experiments involve 3D surfaces. Target shapes have been pre-defined with robot configurations that ensure that the shape is achievable; this ensures, for example, that the robot is not required to leave its workspace. The setup, the object-segmentation and several relevant time instants are shown in <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a>. For each of the four experiments several acquired RGB images are shown grayscale along with the object segmentation highlighted in blue. The object&#x27;s 3D points (corresponding to each time instant) are shown from a slightly elevated viewpoint that provides a better understanding of the 3D configuration of the object. The grippers are represented with gray cubes, and the target shape \(\mathbf{Y}\) with the surface mapping (colour map on the object) is shown at the bottom of the sequence. The <strong>attached video</strong> presents several additional perspectives that provide a better insight of the 3D configurations of the objects.</p><p>The first experiment in <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a> involves an anti-symmetric bending process along with a light twist. A trend-change can be observed on the actions after \(k=20\), specially on the \(y\) and \(z\) components of \(\mathbf{u}_g\) (green and blue) and the \(y\) components of \(\mathbf{\omega}\) (green). This is a consequence of the evolution of \(r^*(k)\) during the first \(50\) iterations: our system focuses first on the bending process as it is responsible for larger error reduction and then tackles the twisting process.</p><p>The second experiment consists of unfolding an object from a bent to a straightened configuration. This shape control problem is particularly challenging as, when approaching the target shape (around \(k=110\)) the object buckles thus breaking the assumption of small deformations between iterations and generating unreliable estimations of \(q(k,r)\). The buckling produces a global shape change on the object and thus \(r^*(k)\) undergoes an abrupt change towards global scale values (i.e., \(r^*(t)=R(t)\)). Even so, the system shows robustness and manages to continue converging. The buckling process can be better perceived in <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a> and in the top view of the experiments video: between \(k=111\) and \(k=112\) the object suddenly changes its curvature with respect to the camera&#x27;s front view.</p><p>The third experiment in <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a> involves a pure-twisting process. As in the analogue simulation, the alignment of the rotation axes can be problematic, as opposite rotation actions are coupled. Our control system generates symmetric rotation actions that evenly deform both sides of the object. Optimal scale \(r^*(t)\) increases as the object increases its rigidity due to the accumulated torsion: the object&#x27;s response to pure rotation at larger scales takes some iterations. This is not the case in the analogous simulation, as the ARAP deformation model prioritises homogeneous deformation along the whole object from the initial time instant. The fourth experiment involves the 3D bending of a triangle shape. The shape control task is properly managed. However, it is worth mentioning a small error increase at \(k=105\). This is due to a discontinuity in the surface mapping that infringes the assumption of surface continuity. This lack of map-continuity can be appreciated in the last column of <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a>, where a colour map discontinuity can be observed on the left side of the triangle (\(k=105\)). As a result, peaks (outliers) around \(k=105\) can be observed in all the plots of the fourth column in <a href="#experiments_fig" class="figref">Fig.&nbsp;3</a>.</p><p><a href="#fig:model-validation" class="figref">Fig.&nbsp;4</a> shows the analysis of our proposed Procrustes-based deformation model regarding estimation error, computation frequency, and volume of analysed data. The estimation error is defined by comparing predicted and measured node positions during iterations. We compared our model against geometry-based deformation models from (<a href="references.html#ref-sorkine2007rigid" class="citation" title="As-rigid-as-possible surface modeling">Sorkine and Alexa, 2007</a>) (used in (<a href="references.html#ref-shetab2022rigid" class="citation" title="As-Rigid-As-Possible Shape Servoing">Shetab-Bushehri et al., 2022</a>)(<a href="references.html#ref-shetab2022lattice" class="citation" title="Lattice-based shape tracking and servoing of elastic objects">Shetab-Bushehri et al., 2022</a>)) and (<a href="references.html#ref-liu2008local" class="citation" title="A local/global approach to mesh parameterization">Liu et al., 2008</a>), as well as a mass-spring-damper (MSD) physical-based model. Our model competes well with these three models, achieving a desirable balance between accuracy and computation time-cost. In addition, unlike the time cost of the other three models, our process&#x27; time cost also encompasses the cost of computing the control actions. The favourable balance between model accuracy and low computation time cost makes our model an attractive choice for shape control. Note that these comparisons do not aim to constitute conventional bench-marking: some aspects, such as the type of mesh or the set maximum number of optimisation iterations, may affect the performance of different deformation models in distinct manners. This makes it difficult to make fair comparisons. However, seeking fairness in the comparisons, we imposed a maximum limit of 20 iterations on the optimisation process for all of the compared models. This approach allows for a reasonable evaluation of model performance in shape control, despite the inherent complexities involved in comparing diverse methods.</p></div></section>
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="section-3-sectionStability.html" class="nav-btn prev-btn">← 3. Stability analysis</a>
+            <a href="section-5-conclusions.html" class="nav-btn next-btn">5. Conclusions →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

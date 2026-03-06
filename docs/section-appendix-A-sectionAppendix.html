@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$ — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html" selected>Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section active"><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        <section class="section-content"><h2 id="sectionAppendix" class="section-heading"><span class="sec-num">A</span> Differentiability of $\mathbf{T}_g$ with respect to $r$</h2>
+<div class="section-body">In this appendix we study continuity and differentiability of \(\mathbf{T}_g\) (i.e. of \(\mathbf{R}_g,\mathbf{t}_g\)) with respect to \(r\). Variations in \(r\) imply a smooth variation on the domains \(\Omega_g\) being considered for the Procrustes analysis (domains are enlarged or reduced by boundary \(\partial \Omega_g\)). Regarding the continuous Procrustes problem definition in (<a href="references.html#ref-al2013continuous" class="citation" title="Continuous procrustes distance between two surfaces">Al-Aifari et al., 2013</a>), we can define our analogous space-continuous squared Procrustes residual for \(\mathbf{X}_g\) and \(\mathbf{Y}_g\) as:
+    <span id="eq:continuousPorcr"></span>\[
+        d^2_{\mathcal{P}}(\mathbf{X}_g,\mathbf{Y}_g)=\begin{matrix}
+\\ \min
+\\ \mathbf{R}_g,\mathbf{t}_g
+\end{matrix}\left(\int_{\Omega_g}\left \|\mathbf{R}_g\mathbf{x}+\mathbf{t}_g-\mathbf{y}\right\|^2 \mathrm{d} {\Omega}\right),
+\tag{25}
+\]
+where \(\mathbf{x}\) and \(\mathbf{y}\) represent mapped points of the shapes&#x27; surface manifolds. For now on, as \(\mathbf{x}\) are mapped to \(\mathbf{y}\) with area preserving maps (<a href="references.html#ref-melzi2019zoomout" class="citation" title="ZoomOut: Spectral Upsampling for Efficient Shape Correspondence">Melzi et al., 2019</a>), we will use \(\mathrm{d}\Omega_g\) to refer to the differential elements on both the current and the target shape manifolds.
+The optimal translation, in this continuous formulation, is
+\[
+\mathbf{t}_g=\frac{\int_{\Omega_g}\mathbf{y}\mathrm{d}\Omega_g}{\int_{\Omega_g}\mathrm{d}\Omega_g}-\frac{\int_{\Omega_g}\mathbf{R}_g\mathbf{x}\mathrm{d}\Omega_g}{\int_{\Omega_g}\mathrm{d}\Omega_g}=\frac{\int_{\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}\Omega_g}{\int_{\Omega_g} \mathrm{d}\Omega_g},
+\]
+and can be differentiated with respect to \(r\) to obtain:
+<span id="eq:difftg"></span>\[
+\frac{\partial}{\partial r}\mathbf{t}_g=\frac{\partial}{\partial r}\left(\frac{\int_{\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}\Omega_g}{\int_{\Omega_g} \mathrm{d}\Omega_g} \right )
+\\
+=\frac{\partial}{\partial r}\left(\frac{1}{A} \right )\int_{\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}\Omega_g+\frac{1}{A}\frac{\partial}{\partial r}\left(\int_{\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}\Omega_g\right)
+\\
+=-\frac{1}{A^2}\frac{\partial A}{\partial r}\int_{\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}\Omega_g
+\\
++\frac{1}{A}\left(
+\int_{\Omega_g}\frac{\partial \mathbf{R}_g}{\partial r}\mathbf{x}\mathrm{d}\Omega_g
++\int_{\partial\Omega_g} (\mathbf{y}-\mathbf{R}_g\mathbf{x})\mathrm{d}(\partial\Omega_g)\right),
+\tag{26}
+\]
+where \(A(r)\) is the area of the open domain \(\Omega_g\) and, in the last step, we applied the Leibniz&#x27;s integral rule. Note that (<a href="#eq:difftg" class="ref">26</a>) depends on the existence of \(\frac{\partial \mathbf{R}_g}{\partial r}\). The optimal Procrustes rotation component \(\mathbf{R}_g\) can be obtained from:
+<span id="eq:RgObtention"></span>\[
+    \mathbf{R}_g=\sqrt{\mathbf{M}_g\mathbf{M}_g^\intercal}\,\mathbf{M}_g^{-1},
+    \tag{27}
+\]
+where \(\mathbf{M}_g(r)\in\mathbb{R}^{3\times3}\) is equal to:
+<span id="eq:Mdefinition"></span>\[
+    \mathbf{M}_g(r)=\int_{\Omega_g}\left(\mathbf{x}-\bar{\mathbf{x}}_g\right)\left(\mathbf{y}-\bar{\mathbf{y}}_g\right)^\intercal\mathrm{d}\Omega_g.
+    \tag{28}
+\]
+In this continuous formulation \(\bar{\mathbf{x}}_g={\int_{\Omega_g}\mathbf{x}\mathrm{d}\Omega_g}/{\int_{\Omega_g}\mathrm{d}\Omega_g}\) and \(\bar{\mathbf{y}}_g={\int_{\Omega_g}\mathbf{y}\mathrm{d}\Omega_g}/{\int_{\Omega_g}\mathrm{d}\Omega_g}\). Equation (<a href="#eq:RgObtention" class="ref">27</a>), and therefore \(\mathbf{R}_g\), is continuous differentiable with respect to \(r\) given two conditions: \(\mathbf{M}_g\) being continuous differentiable and existence of \(\mathbf{M}^{-1}_g\) for \(r\in[r_0,R(t)]\). \(\mathbf{M}_g(r)\) is differentiable with respect to \(r, \forall \, r&gt;0\):
+<span id="eq:diffM"></span>\[
+\frac{\partial}{\partial r}\mathbf{M}_g=
+\int_{\Omega_g}\frac{\partial}{\partial r}\left(\left(\mathbf{x}-\bar{\mathbf{x}}_g\right)\left(\mathbf{y}-\bar{\mathbf{y}}_g\right)^\intercal\right)\mathrm{d}\Omega_g
+\\
++
+\int_{\partial\Omega_g}\left(\mathbf{x}-\bar{\mathbf{x}}_g\right)\left(\mathbf{y}-\bar{\mathbf{y}}_g\right)^\intercal\mathrm{d}(\partial\Omega_g).
+    \tag{29}
+\]
+On the other hand, \(\mathbf{M}_g^{-1}\) exists if there exist at least three non-aligned points \(\mathbf{x}\) and three non-aligned points \(\mathbf{y}\) in the domains \(\Omega_g\) of each manifold. This condition is certainly achieved for any 3D object (planar or volumetric) and \(r&gt;0\).</div>
+<div class="author-bios">
+<div class="author-bio">
+  <img src="img/authorCuiral-Zueco.jpg" alt="Ignacio Cuiral-Zueco" class="author-photo" loading="lazy">
+  <div class="author-bio-text">
+    <strong class="author-bio-name">Ignacio Cuiral-Zueco</strong>
+    received the Industrial Engineering Master degree majoring in robotics and computer vision in the University of Zaragoza, Spain, in 2019. He is currently enrolled in the Ph.D. program in systems engineering and computer science from the University of Zaragoza. He is member of the Robotics, Perception and Real-Time research group. His current research interests include computer vision, control engineering and robotics.
+  </div>
+</div>
+<div class="author-bio">
+  <img src="img/authorLopez-Nicolas.jpg" alt="Gonzalo López-Nicolás" class="author-photo" loading="lazy">
+  <div class="author-bio-text">
+    <strong class="author-bio-name">Gonzalo López-Nicolás</strong>
+    (SM&#x27;15) received the Ph.D. degree in
+Systems Engineering and Computer Science from Universidad de
+Zaragoza, Spain, in 2008. He is currently Full Professor of the Departamento de
+Informática e Ingeniería de Sistemas, Universidad de
+Zaragoza. He is a member of the Instituto de Investigación en
+Ingeniería de Aragón (I3A). His current research interests
+are focused on shape control, visual control, multi-robot systems, and application of computer vision to robotics.
+  </div>
+</div>
+</div></section>
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="section-5-conclusions.html" class="nav-btn prev-btn">← 5. Conclusions</a>
+            <a href="references.html" class="nav-btn next-btn">References →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

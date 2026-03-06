@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. Introduction — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html" selected>1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html">3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section active"><a href="section-1-introduction.html">1. Introduction</a>
+<ul>
+<li class="toc-subsection"><a href="#relatedWork">1.1. Related work</a>
+</li>
+<li class="toc-subsection"><a href="#S:proposal">1.2. Proposed method and contributions</a>
+</li>
+</ul>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section "><a href="section-3-sectionStability.html">3. Stability analysis</a>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        <section class="section-content"><h2 id="introduction" class="section-heading"><span class="sec-num">1</span> Introduction</h2>
+<div class="section-body"><p>object deformation processes has multiple applications such as manipulation-related tasks performed in industrial processes, surgical procedures or home-robotics. The wide variety of tasks and object types hinders the process of classifying and contextualising control strategies. This paper focuses on the shape control task, which is defined in surveys of the deformable object manipulation literature (e.g., (<a href="references.html#ref-herguedas2019survey" class="citation" title="Survey on multi-robot manipulation of deformable objects">Herguedas et al., 2019</a>; <a href="references.html#ref-sanchez2018robotic" class="citation" title="Robotic manipulation and sensing of deformable objects in domestic and industrial applications: a survey">Sanchez et al., 2018</a>; <a href="references.html#ref-yin2021modeling" class="citation" title="Modeling, learning, perception, and control methods for deformable object manipulation">Yin et al., 2021</a>)). Within the deformable object manipulation context, these surveys propose different criteria for the classification of objects, control strategies or perception methods. In (<a href="references.html#ref-sanchez2018robotic" class="citation" title="Robotic manipulation and sensing of deformable objects in domestic and industrial applications: a survey">Sanchez et al., 2018</a>), a deformable object classification is proposed. Based on physical and shape criteria, (<a href="references.html#ref-sanchez2018robotic" class="citation" title="Robotic manipulation and sensing of deformable objects in domestic and industrial applications: a survey">Sanchez et al., 2018</a>) classifies objects into cloth-like, linear, planar and solid objects. Within the manipulation tasks, they include the shape control problem for planar objects and sub-divide it into single point and multiple points shape control. Survey (<a href="references.html#ref-yin2021modeling" class="citation" title="Modeling, learning, perception, and control methods for deformable object manipulation">Yin et al., 2021</a>) includes a classification of objects according to their spatial dimensions and categorises them into 1D, 2D and 3D objects. Regarding the deformable object perception, (<a href="references.html#ref-herguedas2019survey" class="citation" title="Survey on multi-robot manipulation of deformable objects">Herguedas et al., 2019</a>) classifies the perception of deformable objects into: force-based, vision-based, and both vision and force-based perception. Focusing more on vision-based sensing, (<a href="references.html#ref-yin2021modeling" class="citation" title="Modeling, learning, perception, and control methods for deformable object manipulation">Yin et al., 2021</a>) includes control-related concepts such as state estimation, model, state-template or parameter identification in its perception section.</p><figure class="survey-figure" id="fig:proposal">
+<img src="img/inkscapeFigures/FIG1.png" alt="Figure" loading="lazy">
+<figcaption><strong>Figure 1.</strong> Control scheme of the shape control method. A 3D object mesh is extracted from the scene&#x27;s 3D reconstruction. Using functional maps, the current shape mesh is matched to the reference (or target) shape mesh. A multi-scale analysis is then performed making use of a local rigidity measurement of how rigidly the object behaves at each scale. The multi-scale analysis provides an optimal scale value that serves as input for our control law.</figcaption>
+</figure></div>
+<h3 id="relatedWork" class="section-heading"><span class="sec-num">1.1</span> Related work</h3>
+<div class="section-body"><p>Some shape control methods rely on the use of Jacobian matrices that model the object deformation dynamics in a local manner. This is the case of (<a href="references.html#ref-berenson2013manipulation" class="citation" title="Manipulation of deformable objects without modeling and simulating deformation">Berenson, 2013</a>) in which the stretch limits of the objects and gripper collisions are considered. In (<a href="references.html#ref-6581888" class="citation" title="Model-Free Visually Servoed Deformation Control of Elastic Objects by Robot Manipulators">Navarro-Alarcón et al., 2013</a>), the Jacobian matrix is estimated from visual-features and used to control feedback points of elastic objects. In (<a href="references.html#ref-shetab2022rigid" class="citation" title="As-Rigid-As-Possible Shape Servoing">Shetab-Bushehri et al., 2022</a>) and 
+(<a href="references.html#ref-shetab2022lattice" class="citation" title="Lattice-based shape tracking and servoing of elastic objects">Shetab-Bushehri et al., 2022</a>), the authors exploit the As-Rigid-As-Possible deformation model (ARAP (<a href="references.html#ref-sorkine2007rigid" class="citation" title="As-rigid-as-possible surface modeling">Sorkine and Alexa, 2007</a>)) in order to achieve shape control. Both approaches are validated through several experiments. Another Jacobian computation approach is presented in (<a href="references.html#ref-navarro2017fourier" class="citation" title="Fourier-based shape servoing: a new feedback method to actively deform soft objects into desired 2-D image contours">Navarro-Alarcon and Liu, 2017</a>), where the Jacobian matrix parameters are estimated with the use of truncated Fourier series of the 2D object&#x27;s contour (i.e. the object&#x27;s 1D closed contour embedded in 2D). The method is validated in experiments that involve an active and a passive gripper. Using Fourier series as well, dual-arm flexible cable manipulation experiments are presented in (<a href="references.html#ref-zhu2018dual" class="citation" title="Dual-arm robotic manipulation of flexible cables">Zhu et al., 2018</a>). Cable manipulation is also tackled in (<a href="references.html#ref-sintov2020" class="citation" title="Motion Planning for Dual-Arm Manipulation of Elastic Rods">Sintov et al., 2020</a>), (<a href="references.html#ref-lagneau2020automatic" class="citation" title="Automatic shape control of deformable wires based on model-free visual servoing">Lagneau et al., 2020</a>) and (<a href="references.html#ref-naijing2022" class="citation" title="Dynamic Modeling and Control of Deformable Linear Objects for Single-Arm and Dual-Arm Robot Manipulations">Lv et al., 2022</a>). In the former, the main-connectivity of the cable&#x27;s free configuration space is captured by a simplified pre-computed descriptor that allows to numerically solve the cable&#x27;s ODE at a reduced cost. The method in (<a href="references.html#ref-lagneau2020automatic" class="citation" title="Automatic shape control of deformable wires based on model-free visual servoing">Lagneau et al., 2020</a>) presents a B-spline based model that relies on 3D tracking wires with the use of a particle filter. The system proposed in (<a href="references.html#ref-naijing2022" class="citation" title="Dynamic Modeling and Control of Deformable Linear Objects for Single-Arm and Dual-Arm Robot Manipulations">Lv et al., 2022</a>) models collisions, contacts and frictions between cables and a plane in the workspace.</p><p>Making use of an adaptive deformation model, experiments involving materials such as foam, meat or plastic are carried out satisfactorily in (<a href="references.html#ref-navarro2016automatic" class="citation" title="Automatic 3-D manipulation of soft objects by robotic arms with an adaptive deformation model">Navarro-Alarcon et al., 2016</a>). In (<a href="references.html#ref-zhu2021vision" class="citation" title="Vision-based manipulation of deformable and rigid objects using subspace projections of 2-D contours">Zhu et al., 2021</a>), a Principal Component Analysis (PCA) is applied to the 2D contour of the object&#x27;s silhouette. In (<a href="references.html#ref-aranda2020monocular" class="citation" title="Monocular Visual Shape Tracking and Servoing for Isometrically Deforming Objects">Aranda et al., 2020</a>), real experiments involving large isometric deformations on planar objects are carried out. This method uses monocular perception and a Shape-from-Template (SfT) based algorithm. Image contour moments are used to define a sliding control strategy to control the shape of objects that range from soft to rigid (articulated) (<a href="references.html#ref-qi2021contour" class="citation" title="Contour Moments Based Manipulation of Composite Rigid-Deformable Objects With Finite Time Model Estimation and Shape/Position Control">Qi et al., 2022</a>). Their method is validated with a stability proof and experiments with a dual-arm robot setup.</p><p>In (<a href="references.html#ref-hu2018three" class="citation" title="Three-dimensional deformable object manipulation using fast online Gaussian process regression">Hu et al., 2018</a>), a 3D deformable object servo control based on a Gaussian Process Regression (GPR) online learned model is presented. The method in (<a href="references.html#ref-lopez2020simultaneous" class="citation" title="Simultaneous shape control and transport with multiple robots">López-Nicolás et al., 2020</a>) focuses on deformable object transport and introduces a consensus-based deformation model for the manipulation of broad flexible objects with the use of a large number of manipulators. Two heuristic methods and a neural network for shaping non-prehensile materials with plastic deformation characteristics (not elastic) are introduced and compared in(<a href="references.html#ref-cherubini2020model" class="citation" title="Model-free vision-based shaping of deformable plastic materials">Cherubini et al., 2020</a>). They acquire desired shapes by pushing kinetic sand with adapted robotic arms. For more state of the art publications we refer the reader to the special issue (<a href="references.html#ref-zhu2022" class="citation" title="Editorial: Robotic Handling of Deformable Objects">J. Zhu et al., 2022</a>) which collects a variety of publications focusing on the manipulation of deformable objects.</p></div>
+<h3 id="S:proposal" class="section-heading"><span class="sec-num">1.2</span> Proposed method and contributions</h3>
+<div class="section-body"><p>In the deformable object manipulation literature, some methods focus on specific tasks (e.g., object cutting (<a href="references.html#ref-han2020vision" class="citation" title="Vision-based cutting control of deformable objects with surface tracking">Han et al., 2020</a>)) or specific object types (e.g., flexible PCB manipulation in (<a href="references.html#ref-li2018vision" class="citation" title="Vision-based robotic manipulation of flexible PCBs">Li et al., 2018</a>)). In this paper we propose a method for shape control that tackles the manipulation of texture-less objects that may undergo large 3D deformations (i.e. object&#x27;s curvature, length, area or volume can globally vary in 3D space). Note that we focus on shape control, meaning that object transport (e.g., considering error with a rigid component such as an arbitrary translation and rotation of the object) is outside our scope. The goal is to define a control system that allows to manipulate the shape of a deformable object towards a desired target shape with the use of robots and vision sensors (<a href="#fig:proposal" class="figref">Fig.&nbsp;1</a>).</p><p>Objects are assumed to be large-strain (i.e. to have low Young&#x27;s modulus) and we assume there is no information about their specific physical properties (density, stiffness, etc.). We focus on objects that present certain rigidity such that gravity or inertia do not dominate their behaviour (e.g. clothes are not considered). Our assumptions include proper object perception (no significant occlusions) and knowledge of the initial gripper configuration. While better results might be achieved with appropriate gripper configuration, our method does not rely on the assumption that the grippers are ideally positioned on the object. The effects of gravity and inertia are disregarded given the assumption that deformations are gradual and slow. As the objects may be texture-less, our method does not rely on visual descriptors.</p><p>Regarding the control strategy (see <a href="#fig:proposal" class="figref">Fig.&nbsp;1</a>), in section <a href="section-2-sectionControl.html#sectionControl" class="ref">2</a> we propose a multi-scale analysis to determine the scale on which our novel control strategy should be focused at each time instant during the deformation process (scale defined as the topological distance at which surface points lie from a gripper). We do so under what we defined as the local rigidity assumption. We validate the assumption by means of a multi-scale Procrustes analysis, i.e. we measure the extent to which the object can be considered to be moving rigidly at each scale. Using this information, we define a 6 DoF control action for each one of the grippers that are manipulating the object. We provide a stability analysis (section <a href="section-3-sectionStability.html#sectionStability" class="ref">3</a>) and several simulation and experiments (section <a href="section-4-Section-results.html#Section:results" class="ref">4</a>) that validate our proposed system.</p><p>In the following, we will discuss and analyse the main contributions and contextualise them in the literature.
+<ul><li>ıtem We define a novel shape control framework for 3D deformations of both planar and volumetric objects. Our method is the first 3D shape control system that, with the use of functional maps, performs a holistic shape analysis. That is, thanks to the novel application of (<a href="references.html#ref-melzi2019zoomout" class="citation" title="ZoomOut: Spectral Upsampling for Efficient Shape Correspondence">Melzi et al., 2019</a>) in a real shape control setup, we define our 3D control strategy and shape error by analysing all of the object&#x27;s perceived geometry (regardless of its visual texture) and consider deformations at different scales. Most existing methods tackle 1D (linear) objects (e.g. (<a href="references.html#ref-lagneau2020automatic" class="citation" title="Automatic shape control of deformable wires based on model-free visual servoing">Lagneau et al., 2020</a>; <a href="references.html#ref-zhuenviro20" class="citation" title="Robotic Manipulation Planning for Shaping Deformable Linear Objects With Environmental Contacts">Zhu et al., 2020</a>; <a href="references.html#ref-planarbihuo22" class="citation" title="Keypoint-Based Planar Bimanual Shaping of Deformable Linear Objects Under Environmental Constraints With Hierarchical Action Framework">Huo et al., 2022</a>; <a href="references.html#ref-naijing2022" class="citation" title="Dynamic Modeling and Control of Deformable Linear Objects for Single-Arm and Dual-Arm Robot Manipulations">Lv et al., 2022</a>; <a href="references.html#ref-matsuno2006manipulation" class="citation" title="Manipulation of deformable linear objects using knot invariants to classify the object condition based on image sensor information">Matsuno et al., 2006</a>)) or confine their analysis to 2D contours (e.g., (<a href="references.html#ref-navarro2017fourier" class="citation" title="Fourier-based shape servoing: a new feedback method to actively deform soft objects into desired 2-D image contours">Navarro-Alarcon and Liu, 2017</a>; <a href="references.html#ref-qi2021contour" class="citation" title="Contour Moments Based Manipulation of Composite Rigid-Deformable Objects With Finite Time Model Estimation and Shape/Position Control">Qi et al., 2022</a>; <a href="references.html#ref-cuiraliros2021" class="citation" title="Multi-scale Laplacian-based FMM for shape control">Cuiral-Zueco and López-Nicolás, 2021</a>; <a href="references.html#ref-zhu2021vision" class="citation" title="Vision-based manipulation of deformable and rigid objects using subspace projections of 2-D contours">Zhu et al., 2021</a>)). Few methods address 3D deformations of planar and/or volumetric objects, e.g. (<a href="references.html#ref-navarro2016automatic" class="citation" title="Automatic 3-D manipulation of soft objects by robotic arms with an adaptive deformation model">Navarro-Alarcon et al., 2016</a>; <a href="references.html#ref-hu20193" class="citation" title="3-D deformable object manipulation using deep neural networks">Hu et al., 2019</a>; <a href="references.html#ref-hu2018three" class="citation" title="Three-dimensional deformable object manipulation using fast online Gaussian process regression">Hu et al., 2018</a>). Rather than addressing holistic shape control, these methods present task-oriented approaches. For example, they base their shape analysis and errors on a few discrete features such as a segment&#x27;s curvature, the object&#x27;s centroid or the position of a reduced number of feature points.
+    ıtem We prove local asymptotic stability of our control system and further validate the method with experiments. Related works also study local stability (<a href="references.html#ref-navarro2016automatic" class="citation" title="Automatic 3-D manipulation of soft objects by robotic arms with an adaptive deformation model">Navarro-Alarcon et al., 2016</a>; <a href="references.html#ref-hu2018three" class="citation" title="Three-dimensional deformable object manipulation using fast online Gaussian process regression">Hu et al., 2018</a>); other works such as (<a href="references.html#ref-hu20193" class="citation" title="3-D deformable object manipulation using deep neural networks">Hu et al., 2019</a>) do not provide stability analysis nor guarantees system convergence.
+    ıtem We validate our proposed model using real data from our experiments and compare it against other existing baselines. The comparisons show that our model is suitable for shape control given its proper balance between accuracy and computational time cost.
+    ıtem Our proposed control method does not require a priori information or initial exploration of the object&#x27;s behaviour. Although online-updated, methods such as (<a href="references.html#ref-navarro2016automatic" class="citation" title="Automatic 3-D manipulation of soft objects by robotic arms with an adaptive deformation model">Navarro-Alarcon et al., 2016</a>) or (<a href="references.html#ref-hu2018three" class="citation" title="Three-dimensional deformable object manipulation using fast online Gaussian process regression">Hu et al., 2018</a>) require an initial exploration of the object behaviour and/or a random initialisation before converging to what they refer to as a <em>good enough initial model</em>.</li></ul></p></div></section>
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="index.html" class="nav-btn prev-btn">← Home</a>
+            <a href="section-2-sectionControl.html" class="nav-btn next-btn">2. Multi-scale Procrustes shape control →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

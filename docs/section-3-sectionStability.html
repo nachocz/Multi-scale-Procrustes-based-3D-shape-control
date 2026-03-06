@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. Stability analysis — Multi-scale Procrustes-based 3D shape control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-title">Multiscale Procrustes-Based 3-D Shape Control</a>
+        <div class="nav-section-select">
+            <select id="sectionSelect" onchange="if(this.value) window.location.href=this.value;">
+                <option value="index.html">Home</option>
+<option value="section-1-introduction.html">1. Introduction</option>
+<option value="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</option>
+<option value="section-3-sectionStability.html" selected>3. Stability analysis</option>
+<option value="section-4-Section-results.html">4. Results</option>
+<option value="section-5-conclusions.html">5. Conclusions</option>
+<option value="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</option>
+<option value="references.html">References</option>
+            </select>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="references.html">References</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero / Paper header (only on index page) -->
+<header class="hero hidden">
+    <div class="hero-inner">
+        <p class="hero-journal">IEEE/ASME Transactions on Mechatronics · 2024</p>
+        <h1 class="hero-title">Multi-scale Procrustes-based 3D shape control</h1>
+        <p class="hero-authors">Ignacio Cuiral-Zueco, Gonzalo López-Nicolás</p>
+        <p class="hero-affiliations">I. Cuiral-Zueco and G. López-Nicolás are with Instituto de Investigación en Ingeniería de Aragón, Universidad de Zaragoza, Spain.  ignaciocuiral@unizar.es,  gonlopez@unizar.es. Corresponding author: Ignacio Cuiral-Zueco. Address: C/María de Luna 1, 50018, Zaragoza, Spain. Tel. +34 876555556. This work was supported via projects PID2021-124137OB-I00 and TED2021-130224B-I00 funded by
+MCIN/AEI/10.13039/501100011033, by ERDF A way of making Europe and by the European Union NextGenerationEU/PRTR.</p>
+    </div>
+</header>
+
+<!-- Main layout: sidebar + content -->
+<div class="layout">
+
+    <!-- Sidebar / Table of Contents -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <h3 class="sidebar-title">Contents</h3>
+            <nav class="sidebar-nav" id="toc">
+                <ul class="toc-list"><li class="toc-section "><a href="section-1-introduction.html">1. Introduction</a>
+</li>
+<li class="toc-section "><a href="section-2-sectionControl.html">2. Multi-scale Procrustes shape control</a>
+</li>
+<li class="toc-section active"><a href="section-3-sectionStability.html">3. Stability analysis</a>
+<ul>
+<li class="toc-subsection"><a href="#preface">3.1. Preface</a>
+</li>
+<li class="toc-subsection"><a href="#lyapunov-stability">3.2. Lyapunov stability</a>
+</li>
+</ul>
+</li>
+<li class="toc-section "><a href="section-4-Section-results.html">4. Results</a>
+</li>
+<li class="toc-section "><a href="section-5-conclusions.html">5. Conclusions</a>
+</li>
+<li class="toc-section "><a href="section-appendix-A-sectionAppendix.html">Appendix A. Differentiability of $\mathbf{T}_g$ with respect to $r$</a>
+</li></ul>
+            </nav>
+            <div class="sidebar-refs">
+                <a href="references.html" class="sidebar-refs-link">References</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="content">
+        <section class="section-content"><h2 id="sectionStability" class="section-heading"><span class="sec-num">3</span> Stability analysis</h2>
+<div class="section-body">In this section we prove that the contribution of each gripper to the error derivative \(\dot{e}(t)\) presents local asymptotic stability. First, some preliminary concepts are presented. Then, we introduce several lemmas that lead to theorem <a href="#theorem:lyapunov" class="ref">ref</a>, which concludes local asymptotic stability of the system.</div>
+<h3 id="preface" class="section-heading"><span class="sec-num">3.1</span> Preface</h3>
+<div class="section-body">We use \(\mathrm{Tr}\) to refer to the matrix&#x27;s trace. For clarity, the dependence on \(r^*\) and \(t\) has been omitted when it could be easily inferred. Recall super-index \(h\) denotes homogeneous coordinates.
+The transpose of the logarithm of a rigid transform is (see Appendix A in (<a href="references.html#ref-murray2017mathematical" class="citation" title="A mathematical introduction to robotic manipulation">Murray et al., 2017</a>)):
+<span id="eq:logTg"></span>\[
+    \log(\mathbf{T}_g^{\intercal})=\log{\left( 
+    \begin{array}{c|c}
+        \begin{matrix}
+\mathbf{R}_g^{} \\ 
+ \mathbf{0}_{1 \times 3}
+\end{matrix}& \begin{matrix}
+ \mathbf{t}_g  \\ 
+ 1
+\end{matrix} 
+    \end{array}
+\right)}=\left( 
+    \begin{array}{c|c}
+        \begin{matrix}
+\log{(\mathbf{R}_g^{\intercal})} \\ 
+(\mathbf{t}')^{\intercal}
+\end{matrix} & \mathbf{0}_{4 \times 1}
+    \end{array}
+\right),
+\tag{14}
+\]
+where the rotation term \(\log(\mathbf{R}_g^{\intercal})\) can be obtained from:
+<span id="eq:logR"></span>\[
+    \log(\mathbf{R}_g)=\frac{\theta}{2\sin (\theta) }(\mathbf{R}_g-\mathbf{R}_g^\intercal),
+    \tag{15}
+\]
+being \(\theta \in (-\pi,\pi)\) the angle of rotation induced by \(\mathbf{R}_g\). Translation term \(\mathbf{t}'\in \mathbb{R}^3\) in (<a href="#eq:logTg" class="ref">14</a>) is \(\mathbf{t}'=\mathbf{V}_g\mathbf{t}_g\) (recall \(\mathbf{t}_g=\bar{\mathbf{y}}_g-\mathbf{R}_g\bar{\mathbf{x}}_g\)), being \(\mathbf{V}_g\in \mathbb{R}^{3\times 3}\):
+<span id="eq:Vg"></span>\[
+    \mathbf{V}_g=\mathbf{I}_{3}-\frac{1}{2}\log(\mathbf{R}_g)+\frac{1}{\theta^2}\left(1-\frac{\theta(1+\cos(\theta))}{2\, \sin (\theta)}\right)\log(\mathbf{R}_g)^2.
+    \tag{16}
+\]</div>
+<h3 id="lyapunov-stability" class="section-heading"><span class="sec-num">3.2</span> Lyapunov stability</h3>
+<div class="section-body"><p>Note that the Procrustes residual is invariant to changes in the frame of reference as transformations \(\mathbf{T}_g\) can be expressed in any frame of reference. For convenience we defined \(G\) inertial frames of reference \(\mathcal{F}_g(t)\) with axes always aligned with the global reference axes. Although their orientation does not change, frames \(\mathcal{F}_g(t)\) present a changing position \(\bar{\mathbf{x}}_g(t)\), being \(\bar{\mathbf{x}}_g(t)\) the centroid of \(\mathbf{X}_g(t,r^*(t))\). This is specially convenient as \(\mathcal{F}_g(t)\) implies \(\bar{\mathbf{x}}_g = \mathbf{0}, \forall \,t\) (for that particular reference). For now on, sub-index \(g\) implies point coordinates and transforms are defined from frame \(\mathcal{F}_g(t)\).</p><p>\(\mathrm{Tr}\left (\mathbf{X}^h_g(\mathbf{X}^h_g)^{\intercal}\log(\mathbf{T}_g^{\intercal}) \right)=0\).</p><p>We can decouple this term into the translation and rotation terms enclosed in (<a href="#eq:logTg" class="ref">14</a>):
+<span id="eq:XgtermDecoupled"></span>\[\begin{aligned}
+    & \mathrm{Tr}\left (\mathbf{X}^h_g(\mathbf{X}^h_g)^{\intercal}\log(\mathbf{T}_g^{\intercal}) \right)  \\
+     &=\mathrm{Tr}\left ((\mathbf{X}^\intercal_g,\textbf{1}_{M_g})^\intercal(\mathbf{X}^\intercal_g,\textbf{1}_{M_g})\log(\mathbf{T}_g^{\intercal}) \right) 
+\\
+    &=\mathrm{Tr}\left ( \begin{pmatrix}
+\mathbf{X}_g\mathbf{X}_g^\intercal & {M_g}\bar{\mathbf{x}}_g \\ 
+{M_g}\bar{\mathbf{x}}^\intercal_g & {M_g}
+\end{pmatrix} \left ( \begin{array}{c|c}
+        \begin{matrix}
+\log{(\mathbf{R}_g^{\intercal})} \\ 
+(\mathbf{t}')^{\intercal}
+\end{matrix} & \mathbf{0}_{4 \times 1}
+    \end{array}\right )\right )
+    \\
+    &=\mathrm{Tr}\left (  \begin{array}{c|c} \begin{matrix} \mathbf{X}_g\mathbf{X}_g^\intercal\log{(\mathbf{R}_g^{\intercal})} +{M_g}\bar{\mathbf{x}}_g(\mathbf{t}')^{\intercal}  \\ 
+{M_g}\bar{\mathbf{x}}^\intercal_g\log{(\mathbf{R}_g^{\intercal})} +{M_g}(\mathbf{t}')^{\intercal}
+\end{matrix} & \mathbf{0}_{4 \times 1}\end{array}\right )
+ \\
+&=\mathrm{Tr}\left ( \mathbf{X}_g\mathbf{X}^\intercal_g\log(\mathbf{R}_g^\intercal) \right )+{M_g}\mathrm{Tr}\left(\bar{\mathbf{x}}_g\bar{\mathbf{y}}^\intercal_g\mathbf{V}^\intercal_g\ \right )
+ \\
+&=\mathrm{Tr}\left ( \mathbf{X}_g\mathbf{X}^\intercal_g\log(\mathbf{R}_g^\intercal) \right )+{M_g}\mathrm{Tr}\left(\bar{\mathbf{x}}^\intercal_g\mathbf{V}_g\bar{\mathbf{y}}_g\ \right )
+    \tag{17}
+\end{aligned}\]
+where we considered \(\mathbf{t}'=\mathbf{V}_g\mathbf{t}_g=\mathbf{V}_g\bar{\mathbf{y}}_g\) and, in the last step, trace invariance with respect to matrix transposition and cyclic permutations. The second right hand side term in the last step of (<a href="#eq:XgtermDecoupled" class="ref">17</a>) is zero since frame of reference \(\mathcal{F}_g(t)\) ensures \(\bar{\mathbf{x}}_g = \mathbf{0} \, \forall t\) and the first term from the last step involves the trace of a symmetric matrix times a skew-symmetric matrix and thus is always zero.</p><p>\(-\mathrm{Tr}\left ( \mathbf{Y}_g\mathbf{X}^\intercal_g\log(\mathbf{R}_g^\intercal) \right )\leq 0\,\forall t\) and \(\theta\in (-\pi,\pi)\).</p><p>Considering \(\log(\mathbf{R}_g^{\intercal})=-\log(\mathbf{R}_g)\) we use (<a href="#eq:logR" class="ref">15</a>) to obtain:
+<span id="eq:vdotrotation"></span>\[
+    \mathrm{Tr}\left ( \mathbf{Y}_g\mathbf{X}^\intercal_g\log(\mathbf{R}_g) \right )
+    \\
+    =\frac{\theta}{2\sin (\theta) }\left(\left \langle \mathbf{R}_g^\intercal,{\mathbf{Y}}_g\mathbf{X}_g^{\intercal} \right \rangle_F - \left \langle \mathbf{R}_g,{\mathbf{Y}}_g\mathbf{X}_g^{\intercal} \right \rangle_F\right),
+    \tag{18}
+\]
+where \(\left\langle \mathbf{A},\mathbf{B}\right\rangle_F=\mathrm{Tr}(\mathbf{A}^\intercal\mathbf{B})\) is the Frobenius inner product. We define \(\widetilde{\mathbf{Y}}_g=\mathbf{Y}_g-\bar{\mathbf{Y}}_g\) (\(\bar{\mathbf{Y}}_g\in \mathbb{R}^{3\times {M_g}}\) stacks mean vector \(\bar{\mathbf{y}}_g\)). Matrix \(\mathbf{R}_g(t,r^*(t))\) is obtained from the Procrustes analysis \(\mathcal{P}(\mathbf{X}_g,\mathbf{Y}_g)\) in (<a href="section-2-sectionControl.html#eq:procrustes" class="ref">1</a>) through the singular value decomposition of matrix \(\widetilde{\mathbf{Y}}_g\mathbf{X}_g^{\intercal}=\mathbf{Q}_g\mathbf{S}_g\mathbf{W}_g^{\intercal}\). Considering that \(\bar{\mathbf{Y}}_g\mathbf{X}_g^{\intercal}=0\) when \(\bar{\mathbf{x}}_g=0\), \(\widetilde{\mathbf{Y}}_g\mathbf{X}_g^{\intercal}={\mathbf{Y}}_g\mathbf{X}_g^{\intercal}=\mathbf{Q}_g\mathbf{S}_g\mathbf{W}_g^{\intercal}\). The optimal rotation (i.e. the minimiser of the Procrustes optimisation problem) can be computed as \(\mathbf{R}_g=\mathbf{Q}_g\mathbf{W}_g^\intercal\). Pre-multiplying and pos-multiplying all four bracket terms in (<a href="#eq:vdotrotation" class="ref">18</a>) by \(\mathbf{Q}_g^{\intercal}\) and \(\mathbf{W}_g\) respectively (both are unitary matrix, so the result is invariant to them), we obtain:
+<span id="eq:vdotrotation2"></span>\[
+    \frac{\theta}{2\sin (\theta) }\left(\left \langle \mathbf{Q}^\intercal\mathbf{R}_g^\intercal\mathbf{W}_g,\mathbf{S}_g \right \rangle_F - \left \langle \mathbf{I}_3,\mathbf{S}_g \right \rangle_F\right)
+    \\
+    =\frac{\theta}{2\sin (\theta) }(\mathrm{Tr}\left(\mathbf{W}_g^{\intercal}\mathbf{R}_g\mathbf{Q}_g\mathbf{S}_g\right)-\mathrm{Tr}\left(\mathbf{S}_g\right)),
+    \tag{19}
+\]
+Term \(\frac{\theta}{2\sin (\theta) }\) is always positive for \(\theta \in (-\pi,\pi)\) and, since diagonal matrix \(\mathbf{S}_g\) contains all positive eigenvalues \(\mathrm{Tr}(\mathbf{I}_{3}\mathbf{S}_g)\) is always equal or larger than \(\mathrm{Tr}(\mathbf{W}_g^{\intercal}\mathbf{R}_g\mathbf{Q}_g\mathbf{S}_g)\) (note \(\mathbf{W}_g^{\intercal}\mathbf{R}_g\mathbf{Q}_g\in SO(3)\)). Therefore, (<a href="#eq:vdotrotation2" class="ref">19</a>) is \(\leq 0 \, \forall t\) and \(\theta \in (-\pi,\pi)\).</p><p>\(-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\mathbf{V}_g\bar{\mathbf{y}}_g \right )\leq0,\,\forall t\) and \(\theta\in (-\pi,\pi)\).</p><p>The second term on the right hand side of the definition of \(\mathbf{V}_g\) in (<a href="#eq:Vg" class="ref">16</a>) is a skew symmetric matrix and thus can be neglected (\(\mathrm{Tr}(\mathbf{x}^\intercal\mathbf{A}\mathbf{x})=\mathbf{0}\) for all \(\mathbf{A}\) skew symmetric matrices). The third term on the right hand side in (<a href="#eq:Vg" class="ref">16</a>) when using (<a href="#eq:logR" class="ref">15</a>) and applying Rodrigues&#x27; rotation formula to matrices \(\mathbf{R}_g\) yields:
+<span id="eq:thirdTermVg"></span>\[
+    \frac{c}{\theta^2}
+  (\log(\mathbf{R}_g))^2=c\mathbf{K}^2,\,\text{with } c(\theta)=  1-\frac{\theta(1+\cos(\theta))}{2\, \sin (\theta)},
+    \tag{20}
+\]
+where \(\mathbf{K}(\theta)\) is the skew-symmetric matrix from Rodrigues formula and \(c(\theta)\leq 1\) for \(\theta\in (-\pi,\pi)\). With these considerations:
+<span id="eq:firstTerm21"></span>\[
+\begin{split}
+    -{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\mathbf{V}_g\bar{\mathbf{y}}_g \right )=-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g(\mathbf{I}_3+c\mathbf{K}^2)\bar{\mathbf{y}}_g \right )
+    \\=-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\mathbf{I}_3\bar{\mathbf{y}}_g \right )-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_gc\mathbf{K}^2\bar{\mathbf{y}}_g \right )
+    \\
+    =-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\mathbf{I}_3\bar{\mathbf{y}}_g \right )-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\text{diag}(-c,-c,0)\bar{\mathbf{y}}_g \right )
+\\=-{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\text{diag}(1-c,1-c,1)\bar{\mathbf{y}}_g \right ),
+\tag{21}
+\end{split}
+\]
+where in the third line we applied the fact that \(\mathbf{K}^2\) is a symmetric matrix and the eigenvalues of a squared \(3\times3\) skew-symmetric matrix are always \(\{-1,-1,0\}\). Note how (<a href="#eq:firstTerm21" class="ref">21</a>) is always \(\leq 0\) for \(\theta\in (-\pi,\pi)\) as \(c&lt; 1\) for \(\theta\in (-\pi,\pi)\).</p><p>The system error \(e(t)\) (<a href="section-2-sectionControl.html#eq:error" class="ref">2</a>) is locally asymptotically stable with control law (<a href="section-2-sectionControl.html#eq:controlLaw" class="ref">12</a>). In particular, scalar function \(\mathcal{V}(t)=\frac{1}{2}\left\| \mathbf{X}(t) - \mathbf{Y}\right\|^2_F\) is Lyapunov and presents a derivative
+    \(\dot{\mathcal{V}}_g\leq 0, \forall t\) and \(\theta \in (-\pi,\pi)\).</p><p>\(\mathcal{V}(t)&gt;0,\,\forall\, \mathbf{X}(t)\neq\mathbf{Y}\) and \(\mathcal{V}(t)=0\) only when \(\mathbf{X}(t)=\mathbf{Y}\). We consider that gripper-unaffected points present a zero derivative, i.e. \(\mathrm{d}\mathbf{X}(t)/\mathrm{d}t=\mathbf{0}\) for \(\mathbf{x}_m(t) \notin \Omega_g(t)\). We also consider that gripper-affected points&#x27; derivative is \(\mathrm{d}\mathbf{X}^h_g/\mathrm{d}t=\log(\mathbf{T}_g(t,r^*(t))\mathbf{X}^h_g(t,r^*(t))\), i.e. deriving (<a href="section-2-sectionControl.html#eq:XstateWithU" class="ref">13</a>) as in (<a href="section-2-sectionControl.html#eq:statederiv" class="ref">5</a>). Therefore, the derivative of \(\mathcal{V}(t)\) yields:
+<span id="eq:dlyapunov1"></span>\[
+    \dot{\mathcal{V}}=\frac{1}{G}\sum_{g}^{G}\dot{\mathcal{V}}_g,
+    \tag{22}
+\]
+where \(\dot{\mathcal{V}}\leq 0\) if \(\dot{\mathcal{V}}_g\leq 0,\,\forall g\). Each gripper-associated term \(\dot{\mathcal{V}}_g\) is
+<span id="eq:vdotg"></span>\[
+        \dot{\mathcal{V}}_g=\mathrm{Tr}\left ((\mathbf{X}^h_g-\mathbf{Y}^h_g)(\mathbf{X}^h_g )^{\intercal}\log(\mathbf{T}^{\intercal}_g) \right )
+        \\
+        =\mathrm{Tr}\left (\mathbf{X}^h_g(\mathbf{X}^h_g)^{\intercal}\log(\mathbf{T}_g^{\intercal})\right) - \mathrm{Tr}\left (\mathbf{Y}^h_g(\mathbf{X}^h_g )^{\intercal}\log(\mathbf{T}^{\intercal}_g) \right ).
+    \tag{23}
+\]
+Applying lemma <a href="#lemmaLyapunov1" class="ref">ref</a>, the first right hand side in (<a href="#eq:vdotg" class="ref">23</a>) is zero and, therefore, \(\dot{\mathcal{V}}_g\) yields:
+<span id="eq:vdotgsplit"></span>\[\tag{24}
+\begin{split}
+    \dot{\mathcal{V}}_g=- \mathrm{Tr}\left (\mathbf{Y}^h_g(\mathbf{X}^h_g )^{\intercal}\log(\mathbf{T}_g^{\intercal}) \right )
+    \\
+        =-\mathrm{Tr}\left ( \begin{pmatrix}
+\mathbf{Y}_g\mathbf{X}_g^\intercal & {M_g}\bar{\mathbf{y}}_g \\ 
+{M_g}\bar{\mathbf{x}}^\intercal_g & {M_g}
+\end{pmatrix} \left ( \begin{array}{c|c}
+        \begin{matrix}
+\log{(\mathbf{R}_g^{\intercal})}  \\ 
+(\mathbf{t}')^{\intercal}
+\end{matrix} & \mathbf{0}_{4 \times 1}
+    \end{array}\right )\right )
+    \\
+    =-\mathrm{Tr}\left (  \begin{array}{c|c} \begin{matrix} \mathbf{Y}_g\mathbf{X}_g^\intercal\log{(\mathbf{R}_g^{\intercal})} +{M_g}\bar{\mathbf{y}}_g(\mathbf{t}')^{\intercal} \\ 
+{M_g}\bar{\mathbf{x}}_g\log{(\mathbf{R}_g^{\intercal})} +{M_g}(\mathbf{t}')^{\intercal}
+\end{matrix} & \mathbf{0}_{4 \times 1}\end{array}\right )
+    \\
+    =-\mathrm{Tr}\left ( \mathbf{Y}_g\mathbf{X}^\intercal_g\log(\mathbf{R}_g^\intercal) \right )
+    -{M_g}\mathrm{Tr}\left(\bar{\mathbf{y}}^\intercal_g\mathbf{V}_g\bar{\mathbf{y}}_g \right ),
+    \end{split}
+\]
+where, for the second right hand side term, we considered \(\mathbf{t}'=\mathbf{V}_g\mathbf{t}_g=\mathbf{V}_g\bar{\mathbf{y}}_g\) and trace invariance with respect to matrix transposition and cyclic permutations. Considering lemmas <a href="#lemmaLyapunov12" class="ref">ref</a> and <a href="#lemmaLyapunov13" class="ref">ref</a>, both right hand side terms in (<a href="#eq:vdotgsplit" class="ref">24</a>) are \(\leq 0,\,\forall t\) and \(\theta \in (-\pi,\pi)\) and thus the proof is completed. Note that computation of \(r^*\) relies in the relaxed assumption of LRB. For this reason, the stability analysis remains local since there is no guarantee for a global LRB.</p><p>Note that, as deformable objects constitute under-actuated systems, the local stability in Theorem <a href="#theorem:lyapunov" class="ref">ref</a> does not guarantee a zero-valued error residual. However, it does ensure convergence of the closed-loop system towards a state with a zero error derivative.</p></div></section>
+
+        <!-- Prev / Next navigation -->
+        <div class="page-nav">
+            <a href="section-2-sectionControl.html" class="nav-btn prev-btn">← 2. Multi-scale Procrustes shape control</a>
+            <a href="section-4-Section-results.html" class="nav-btn next-btn">4. Results →</a>
+        </div>
+    </main>
+</div>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
