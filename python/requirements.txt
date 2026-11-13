@@ -1,0 +1,7 @@
+numpy
+scipy
+polyscope
+robust-laplacian
+trimesh
+networkx
+fast-simplification

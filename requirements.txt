@@ -1,0 +1,10 @@
+# Generated on 2026-11-06 from the project's .venv before it was deleted (pip freeze).
+# Python version of that venv: 3.12.10
+fast_simplification==0.1.13
+networkx==3.6.1
+numpy==2.4.3
+polyscope==2.6.1
+robust_laplacian==1.0.0
+scipy==1.17.1
+trimesh==4.11.3
+typing_extensions==4.15.0
