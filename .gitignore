@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+
+# Context / prompts (not for distribution)
+context_paper/
+prompt.txt
+prompt.md
+
+# IDE
+.vscode/
+.idea/
+
+# Local window state of the Python demo (Polyscope / Dear ImGui)
+.polyscope.ini
+imgui.ini
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Outputs
+*.avi
+*.mp4
+# (except the video of the paper, shown on the overview of the demos)
+!docs/video/*.mp4

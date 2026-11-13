@@ -1,8 +1,31 @@
 # Multi-scale Procrustes-based 3D shape control
 
-To access the paper and the user-friendly guide **[visit the pages site https://nachocz.github.io/Multi-scale-Procrustes-based-3D-shape-control/](https://nachocz.github.io/Multi-scale-Procrustes-based-3D-shape-control/)**
+The **[interactive demos](https://ignaciocuiral.com/Multi-scale-Procrustes-based-3D-shape-control/)** explain the method step by step and compute it in the browser. The web version of the paper, with its figures and references, is at **[ignaciocuiral.com/Multi-scale-Procrustes-based-3D-shape-control/paper/](https://ignaciocuiral.com/Multi-scale-Procrustes-based-3D-shape-control/paper/)**.
 
-The complete paper content, figures, references, and interactive features are available on the website above.
+## Interactive demos
+
+**[Open the demos](https://ignaciocuiral.com/Multi-scale-Procrustes-based-3D-shape-control/)**: the method computed in the browser, on objects simulated with ARAP as in the simulations of the paper.
+
+| Page | Content |
+|---|---|
+| `docs/index.html` | Overview, the video of the paper, its figures, and the code. |
+| `docs/intro.html` | **The idea in 2D**: flat pieces moved in the plane (SE(2)). The geodesic ball of radius r, the local-rigidity model at r against the simulated object for a motion of a gripper, the estimation of r from the observed responses to small motions, and the closed loop. |
+| `docs/analysis.html` | **Multi-scale analysis** (Secs. II-A to II-D) at one instant of the 3D closed loop: Procrustes transforms of the geodesic balls, the estimate for an action scale and an influence scale, the error increments, their validation w(t, r'), and q(t, r). |
+| `docs/control.html` | **Shape control** (Secs. II-E and IV-A): the closed loop on five 3D objects, with the isolines of r*, the poses that the Procrustes transforms prescribe, the model estimate against the simulated response, and the plots of Fig. 2. |
+| `docs/stability.html` | **Stability** (Sec. III): the terms of the lemmas and the Lyapunov function along the closed loop. |
+| `docs/paper/` | The web version of the paper. |
+
+The pages are static files (KaTeX and three.js included). The simulation modules (`docs/js/sim`) also run in Node.js.
+
+```bash
+python run.py                  # serves docs/ and opens http://127.0.0.1:8765/
+python tools/build_web.py      # after editing the sources in docs/ (needs Node.js; npx fetches esbuild)
+node tests/test_sim.mjs        # checks of the simulation modules (about 40 s)
+```
+
+KaTeX and three.js keep their MIT licenses (`docs/vendor`), and the optional background music keeps the licenses listed in `docs/audio/CREDITS.md`.
+
+The demos were developed with the assistance of Claude (Anthropic), an AI model, which wrote and tested the code and drafted the text of the pages under the direction of the authors.
 
 ---
 
